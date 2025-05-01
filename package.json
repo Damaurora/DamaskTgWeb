@@ -5,12 +5,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
-    "build": "npm run build:client && npm run build:server",
+    "build": "npx drizzle-kit generate:pg && npm run build:client && npm run build:server",
     "build:client": "vite build",
     "build:server": "tsc -p tsconfig.json",
     "start": "NODE_ENV=production node dist/server/index.js",
     "check": "tsc",
-    "generate": "drizzle-kit generate:pg",
+    "generate": "npx drizzle-kit generate:pg",
     "migrate": "tsx server/migrate.ts"
   },
   "dependencies": {
