@@ -10,7 +10,7 @@ import NewsCarousel from "@/components/carousel/news-carousel";
 import CategoryNav from "@/components/category/category-nav";
 import ProductGrid from "@/components/products/product-grid";
 import LocationCard from "@/components/locations/location-card";
-import Newsletter from "@/components/newsletter";
+
 
 export default function Home() {
   const [location, setLocation] = useLocation();
@@ -75,8 +75,7 @@ export default function Home() {
           </div>
         </section>
         
-        <Newsletter />
-        
+
         {/* Back to top button */}
         <Button
           variant="default"

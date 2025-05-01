@@ -42,21 +42,16 @@
     font-family: 'Roboto', sans-serif;
   }
   
-  .news-carousel {
+  .news-carousel,
+  .categories-carousel,
+  .scrollbar-hide {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
   
-  .news-carousel::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .categories-carousel {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  
-  .categories-carousel::-webkit-scrollbar {
+  .news-carousel::-webkit-scrollbar,
+  .categories-carousel::-webkit-scrollbar,
+  .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
   

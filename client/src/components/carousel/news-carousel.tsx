@@ -11,52 +11,64 @@ export default function NewsCarousel() {
     queryKey: ["/api/news"],
   });
   
-  // Auto-scroll effect
+  // Scroll to next item every 5 seconds
   useEffect(() => {
     if (!containerRef.current || !news?.length) return;
     
-    let scrollAmount = 0;
-    const scrollSpeed = 1;
-    let isScrolling = true;
-    let animationId: number;
-    
-    const autoScroll = () => {
-      if (!isScrolling || !containerRef.current) return;
-      
-      scrollAmount += scrollSpeed;
-      containerRef.current.scrollLeft = scrollAmount;
-      
-      if (scrollAmount >= containerRef.current.scrollWidth - containerRef.current.clientWidth) {
-        scrollAmount = 0;
-      }
-      
-      animationId = requestAnimationFrame(autoScroll);
-    };
-    
-    const handleMouseEnter = () => {
-      isScrolling = false;
-      cancelAnimationFrame(animationId);
-    };
-    
-    const handleMouseLeave = () => {
-      isScrolling = true;
-      animationId = requestAnimationFrame(autoScroll);
-    };
-    
     const container = containerRef.current;
-    container.addEventListener('mouseenter', handleMouseEnter);
-    container.addEventListener('mouseleave', handleMouseLeave);
+    const scrollWidth = container.scrollWidth;
+    const clientWidth = container.clientWidth;
     
-    // Start after delay
-    const timeoutId = setTimeout(() => {
-      animationId = requestAnimationFrame(autoScroll);
-    }, 2000);
+    // Calculate item width (including gap)
+    const itemWidth = scrollWidth / news.length;
+    
+    let currentIndex = 0;
+    let intervalId: NodeJS.Timeout | null = null;
+    
+    const scrollToNext = () => {
+      if (!containerRef.current) return;
+      
+      currentIndex = (currentIndex + 1) % news.length;
+      const nextScrollPosition = itemWidth * currentIndex;
+      
+      containerRef.current.scrollTo({
+        left: nextScrollPosition,
+        behavior: 'smooth'
+      });
+    };
+    
+    // Start interval after delay
+    const intervalId2 = setInterval(scrollToNext, 5000);
+    
+    // Pause on mouse enter
+    const handleInteraction = () => {
+      clearInterval(intervalId2);
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+    
+    // Resume on mouse leave
+    const handleEndInteraction = () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+      intervalId = setInterval(scrollToNext, 5000);
+    };
+    
+    container.addEventListener('mouseenter', handleInteraction);
+    container.addEventListener('touchstart', handleInteraction);
+    container.addEventListener('mouseleave', handleEndInteraction);
+    container.addEventListener('touchend', handleEndInteraction);
     
     return () => {
-      clearTimeout(timeoutId);
-      cancelAnimationFrame(animationId);
-      container.removeEventListener('mouseenter', handleMouseEnter);
-      container.removeEventListener('mouseleave', handleMouseLeave);
+      clearInterval(intervalId2);
+      if (intervalId) clearInterval(intervalId);
+      container.removeEventListener('mouseenter', handleInteraction);
+      container.removeEventListener('touchstart', handleInteraction);
+      container.removeEventListener('mouseleave', handleEndInteraction);
+      container.removeEventListener('touchend', handleEndInteraction);
     };
   }, [news]);
   
@@ -91,7 +103,8 @@ export default function NewsCarousel() {
       
       <div 
         ref={containerRef}
-        className="news-carousel flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory"
+        className="news-carousel flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory scrollbar-hide"
+        style={{ scrollBehavior: 'smooth', WebkitOverflowScrolling: 'touch' }}
       >
         {news.map((item) => (
           <motion.div
