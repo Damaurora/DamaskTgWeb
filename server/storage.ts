@@ -115,7 +115,14 @@ export class MemStorage implements IStorage {
     
     // Add products
     const podCategoryId = Array.from(this.categories.values()).find(c => c.slug === "pods")?.id || 1;
+    const podModsCategoryId = Array.from(this.categories.values()).find(c => c.slug === "pod-mods")?.id || 2;
+    const disposablesCategoryId = Array.from(this.categories.values()).find(c => c.slug === "disposables")?.id || 3;
+    const tobaccoCategoryId = Array.from(this.categories.values()).find(c => c.slug === "tobacco")?.id || 4;
     const liquidCategoryId = Array.from(this.categories.values()).find(c => c.slug === "e-liquids")?.id || 5;
+    const hookahsCategoryId = Array.from(this.categories.values()).find(c => c.slug === "hookahs")?.id || 6;
+    const chewingTobaccoCategoryId = Array.from(this.categories.values()).find(c => c.slug === "chewing-tobacco")?.id || 7;
+    const vaporizersCategoryId = Array.from(this.categories.values()).find(c => c.slug === "vaporizers")?.id || 8;
+    const accessoriesCategoryId = Array.from(this.categories.values()).find(c => c.slug === "accessories")?.id || 9;
     
     const productData: InsertProduct[] = [
       {
@@ -189,6 +196,202 @@ export class MemStorage implements IStorage {
         categoryId: liquidCategoryId,
         availability: true,
         features: { nicotine: "3mg", volume: "60ml" }
+      },
+      // Под-моды
+      {
+        name: "Lost Vape Ursa",
+        slug: "lost-vape-ursa",
+        description: "Премиальный под-мод",
+        imageUrl: "https://images.unsplash.com/photo-1571126722798-ea9a57a0c463?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: podModsCategoryId,
+        availability: true,
+        features: { power: "100W", capacity: "6ml", battery: "Сменный 18650" }
+      },
+      {
+        name: "VooPoo Drag X",
+        slug: "voopoo-drag-x",
+        description: "Стильный под-мод с кожаной вставкой",
+        imageUrl: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: podModsCategoryId,
+        availability: true,
+        features: { power: "80W", capacity: "4.5ml", battery: "Сменный 18650" }
+      },
+      {
+        name: "Vaporesso Target PM80",
+        slug: "vaporesso-target-pm80",
+        description: "Компактный под-мод с мощным аккумулятором",
+        imageUrl: "https://images.unsplash.com/photo-1603822448595-3aafe10b38e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: podModsCategoryId,
+        availability: true,
+        features: { power: "80W", capacity: "4ml", battery: "Встроенный 2000mAh" }
+      },
+      // Одноразки
+      {
+        name: "Elf Bar 1500",
+        slug: "elf-bar-1500",
+        description: "Популярная одноразовая электронная сигарета",
+        imageUrl: "https://images.unsplash.com/photo-1567617182847-0877b1252496?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: disposablesCategoryId,
+        availability: true,
+        features: { puffs: "1500", nicotine: "20mg", battery: "850mAh" }
+      },
+      {
+        name: "HQD King",
+        slug: "hqd-king",
+        description: "Одноразка премиум-класса",
+        imageUrl: "https://images.unsplash.com/photo-1603822252476-f74e97fcad85?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: disposablesCategoryId,
+        availability: true,
+        features: { puffs: "2000", nicotine: "50mg", battery: "1100mAh" }
+      },
+      {
+        name: "Puff Bar Plus",
+        slug: "puff-bar-plus",
+        description: "Компактная одноразовая электронная сигарета",
+        imageUrl: "https://images.unsplash.com/photo-1605989991670-18ad2fa41021?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: disposablesCategoryId,
+        availability: true,
+        features: { puffs: "800", nicotine: "20mg", battery: "550mAh" }
+      },
+      // Табак
+      {
+        name: "Darkside Core",
+        slug: "darkside-core",
+        description: "Крепкий табак для кальяна",
+        imageUrl: "https://images.unsplash.com/photo-1527099908998-5b73a5fe2a0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: tobaccoCategoryId,
+        availability: true,
+        features: { weight: "100g", strength: "Средняя", flavor: "Различные вкусы" }
+      },
+      {
+        name: "Fumari",
+        slug: "fumari",
+        description: "Премиальный табак для кальяна из США",
+        imageUrl: "https://images.unsplash.com/photo-1581800757336-38659b6e3f52?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: tobaccoCategoryId,
+        availability: true,
+        features: { weight: "100g", strength: "Лёгкая", flavor: "Сочные фрукты" }
+      },
+      {
+        name: "Element Air",
+        slug: "element-air",
+        description: "Табак средней крепости для длительных сессий",
+        imageUrl: "https://images.unsplash.com/photo-1516013983599-41d612346f5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: tobaccoCategoryId,
+        availability: true,
+        features: { weight: "200g", strength: "Средняя", flavor: "Освежающие вкусы" }
+      },
+      // Кальяны
+      {
+        name: "Alpha Hookah Model S",
+        slug: "alpha-hookah-model-s",
+        description: "Современный минималистичный кальян",
+        imageUrl: "https://images.unsplash.com/photo-1588652737663-368bf25b4d86?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: hookahsCategoryId,
+        availability: true,
+        features: { height: "62cm", material: "Нержавеющая сталь", hoses: "1" }
+      },
+      {
+        name: "Karma Hookah 3.0",
+        slug: "karma-hookah-3",
+        description: "Премиальный кальян для ценителей",
+        imageUrl: "https://images.unsplash.com/photo-1617047520098-8acf81db249e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: hookahsCategoryId,
+        availability: true,
+        features: { height: "70cm", material: "Авиационный алюминий", hoses: "2" }
+      },
+      {
+        name: "Nube Hookah Junior",
+        slug: "nube-hookah-junior",
+        description: "Компактный кальян для домашнего использования",
+        imageUrl: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: hookahsCategoryId,
+        availability: true,
+        features: { height: "45cm", material: "Нержавеющая сталь", hoses: "1" }
+      },
+      // Жевательный табак
+      {
+        name: "Siberia White",
+        slug: "siberia-white",
+        description: "Очень крепкий жевательный табак",
+        imageUrl: "https://images.unsplash.com/photo-1579208030877-39f6f5588036?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: chewingTobaccoCategoryId,
+        availability: true,
+        features: { nicotine: "43mg/g", weight: "20g", flavor: "Мята" }
+      },
+      {
+        name: "LYFT Ice Cool",
+        slug: "lyft-ice-cool",
+        description: "Безтабачные никотиновые паучи",
+        imageUrl: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: chewingTobaccoCategoryId,
+        availability: true,
+        features: { nicotine: "16mg/g", weight: "16.8g", flavor: "Мята" }
+      },
+      {
+        name: "Thunder X",
+        slug: "thunder-x",
+        description: "Крепкий снюс для опытных пользователей",
+        imageUrl: "https://images.unsplash.com/photo-1584727638096-042c644eda6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: chewingTobaccoCategoryId,
+        availability: true,
+        features: { nicotine: "45mg/g", weight: "19g", flavor: "Классический" }
+      },
+      // Вапорайзеры
+      {
+        name: "PAX 3",
+        slug: "pax-3",
+        description: "Премиальный вапорайзер для сухих смесей",
+        imageUrl: "https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: vaporizersCategoryId,
+        availability: true,
+        features: { battery: "3500mAh", heatup: "15 секунд", temp: "4 режима" }
+      },
+      {
+        name: "Volcano Hybrid",
+        slug: "volcano-hybrid",
+        description: "Настольный вапорайзер высшего класса",
+        imageUrl: "https://images.unsplash.com/photo-1579536568227-e9175a1d64a4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: vaporizersCategoryId,
+        availability: true,
+        features: { power: "120W", heatup: "1-2 минуты", temp: "40-230°C" }
+      },
+      {
+        name: "DynaVap M",
+        slug: "dynavap-m",
+        description: "Компактный аналоговый вапорайзер без электроники",
+        imageUrl: "https://images.unsplash.com/photo-1557687790-902ede7ab58c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: vaporizersCategoryId,
+        availability: true,
+        features: { material: "Нержавеющая сталь", heating: "Внешний источник", chamber: "0.1g" }
+      },
+      // Аксессуары
+      {
+        name: "Coil Master V3",
+        slug: "coil-master-v3",
+        description: "Набор для намотки спиралей",
+        imageUrl: "https://images.unsplash.com/photo-1612225259857-886f3ad0ffe4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: accessoriesCategoryId,
+        availability: true,
+        features: { tools: "10 инструментов", case: "Жесткий кейс", materials: "Нержавеющая сталь" }
+      },
+      {
+        name: "Калауд Lotus 2",
+        slug: "kaloud-lotus-2",
+        description: "Калауд для кальяна премиум-класса",
+        imageUrl: "https://images.unsplash.com/photo-1598797368396-5293e56c4d25?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: accessoriesCategoryId,
+        availability: true,
+        features: { material: "Алюминий", compatibility: "Универсальный", weight: "150g" }
+      },
+      {
+        name: "Battery Case 18650",
+        slug: "battery-case-18650",
+        description: "Защитный кейс для аккумуляторов",
+        imageUrl: "https://images.unsplash.com/photo-1599719500956-d158a3abd0d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+        categoryId: accessoriesCategoryId,
+        availability: true,
+        features: { capacity: "4 аккумулятора", material: "Силикон", size: "Компактный" }
       }
     ];
     

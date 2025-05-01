@@ -138,7 +138,7 @@ export default function ProductPage() {
                 </div>
               )}
               
-              <div className="flex items-center gap-4 mt-8">
+              <div className="flex flex-wrap items-center gap-4 mt-8">
                 <span 
                   className={`py-1 px-3 rounded-md ${
                     product.availability 
@@ -148,6 +148,19 @@ export default function ProductPage() {
                 >
                   {product.availability ? 'В наличии' : 'Нет в наличии'}
                 </span>
+
+                <Button 
+                  variant="default"
+                  className="mt-2 md:mt-0"
+                  onClick={() => {
+                    const managerUsername = '@Nndogss';
+                    const message = `Здравствуйте, а можно уточнить по товару "${product.name}" в вашем магазине`;
+                    const telegramUrl = `https://t.me/${managerUsername.replace('@', '')}?text=${encodeURIComponent(message)}`;
+                    window.open(telegramUrl, '_blank');
+                  }}
+                >
+                  Уточнить
+                </Button>
               </div>
             </div>
           </div>
