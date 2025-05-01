@@ -38,7 +38,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/categories/:slug", async (req, res) => {
+  app.get("/api/category-by-slug/:slug", async (req, res) => {
     try {
       const { slug } = req.params;
       const category = await storage.getCategoryBySlug(slug);

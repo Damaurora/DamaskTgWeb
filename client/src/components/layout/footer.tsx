@@ -4,10 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
 
 export default function Footer() {
-  const { data: categories } = useQuery({
-    queryKey: ["/api/categories"],
-  });
-
   const { data: locations } = useQuery({
     queryKey: ["/api/locations"],
   });
@@ -39,18 +35,40 @@ export default function Footer() {
           </div>
           
           <div>
-            <h4 className="text-white font-medium mb-4">Категории</h4>
+            <h4 className="text-white font-medium mb-4">О магазине</h4>
             <ul className="text-gray-400 space-y-2">
-              {categories?.slice(0, 5).map((category: any) => (
-                <li key={category.id}>
-                  <Link 
-                    href={`/category/${category.slug}`}
-                    className="hover:text-primary"
-                  >
-                    {category.name}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link 
+                  href="/"
+                  className="hover:text-primary"
+                >
+                  Главная
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/#products"
+                  className="hover:text-primary"
+                >
+                  Товары
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/#locations"
+                  className="hover:text-primary"
+                >
+                  Магазины
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  href="/#contacts"
+                  className="hover:text-primary"
+                >
+                  Контакты
+                </Link>
+              </li>
             </ul>
           </div>
           
