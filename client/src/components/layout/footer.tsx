@@ -22,6 +22,13 @@ export default function Footer() {
     if (newCount >= 5) {
       setClickCount(0);
       navigate("/auth");
+      // Добавляем небольшую задержку перед прокруткой
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 100);
     }
   };
   
