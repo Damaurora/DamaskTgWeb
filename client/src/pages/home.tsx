@@ -5,12 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-import HeroSection from "@/components/hero-section";
 import NewsCarousel from "@/components/carousel/news-carousel";
 import CategoryNav from "@/components/category/category-nav";
 import ProductGrid from "@/components/products/product-grid";
 import LocationCard from "@/components/locations/location-card";
-
 
 export default function Home() {
   const [location, setLocation] = useLocation();
@@ -54,8 +52,6 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   
-  // не используется
-  
   return (
     <AnimatePresence>
       <motion.div
@@ -63,7 +59,6 @@ export default function Home() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
-        <HeroSection />
         <NewsCarousel />
         <CategoryNav />
         
@@ -87,7 +82,6 @@ export default function Home() {
           </div>
         </section>
         
-
         {/* Back to top button */}
         <Button
           variant="default"

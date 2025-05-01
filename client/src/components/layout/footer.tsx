@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import FireLogo from "@/components/ui/fire-logo";
 import { useQuery } from "@tanstack/react-query";
-import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
+import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function Footer() {
@@ -57,13 +57,9 @@ export default function Footer() {
               Премиальный магазин вейп товаров с широким ассортиментом и профессиональной консультацией.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-primary">
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-primary">
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
+              <a href="https://t.me/damaskshopsamara" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary">
+                <Send className="h-5 w-5" />
+                <span className="sr-only">Telegram</span>
               </a>
             </div>
           </div>

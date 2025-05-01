@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: damask-shop
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: node dist/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+    staticPublishPath: ./dist/client
