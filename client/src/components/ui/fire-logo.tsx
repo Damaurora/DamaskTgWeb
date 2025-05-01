@@ -3,10 +3,11 @@ import { cn } from "@/lib/utils";
 interface FireLogoProps {
   className?: string;
   size?: number;
+  onClick?: () => void;
 }
 
 // A minimalist fire logo SVG component
-export function FireLogo({ className, size = 24 }: FireLogoProps) {
+export function FireLogo({ className, size = 24, onClick }: FireLogoProps) {
   return (
     <svg 
       width={size} 
@@ -14,7 +15,8 @@ export function FireLogo({ className, size = 24 }: FireLogoProps) {
       viewBox="0 0 24 24" 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("text-[#FF6B00]", className)}
+      className={cn("text-[#FF6B00]", className, onClick && "cursor-pointer")}
+      onClick={onClick}
     >
       <path 
         d="M12 2C9.8 5.6 5 7.6 5 12.9C5 17.3 8.2 20.5 12 20.5C15.8 20.5 19 17.3 19 12.9C19 7.6 14.2 5.6 12 2Z" 

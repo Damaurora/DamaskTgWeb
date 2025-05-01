@@ -1,12 +1,35 @@
-import { Link } from "wouter";
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
 import FireLogo from "@/components/ui/fire-logo";
 import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Footer() {
   const { data: locations } = useQuery({
     queryKey: ["/api/locations"],
   });
+  
+  const [clickCount, setClickCount] = useState(0);
+  const [, navigate] = useLocation();
+  const { user, logoutMutation } = useAuth();
+  
+  // Обработчик для скрытой кнопки администратора
+  const handleSecretClick = () => {
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    
+    if (newCount >= 5) {
+      setClickCount(0);
+      navigate("/auth");
+    }
+  };
+  
+  // Выход из панели администратора
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    navigate("/");
+  };
 
   return (
     <footer className="bg-black py-10 px-4" id="contacts">
@@ -14,7 +37,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <Link href="/" className="flex items-center mb-4">
-              <FireLogo className="w-8 h-8 mr-2" />
+              <FireLogo className="w-8 h-8 mr-2" onClick={handleSecretClick} />
               <h3 className="text-xl font-unbounded font-bold text-white">
                 <span className="text-primary">DAMASK</span> SHOP
               </h3>
@@ -69,6 +92,26 @@ export default function Footer() {
                   Контакты
                 </Link>
               </li>
+              {user && (
+                <li>
+                  <Link 
+                    href="/admin"
+                    className="hover:text-primary"
+                  >
+                    Админ-панель
+                  </Link>
+                </li>
+              )}
+              {user && (
+                <li>
+                  <button 
+                    onClick={handleLogout}
+                    className="hover:text-primary bg-transparent border-none p-0 cursor-pointer"
+                  >
+                    Выйти
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
           

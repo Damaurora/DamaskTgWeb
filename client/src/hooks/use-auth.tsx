@@ -4,16 +4,18 @@ import {
   useMutation,
   UseMutationResult,
 } from "@tanstack/react-query";
-import { User as SelectUser } from "@shared/schema";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { User, insertUserSchema } from "@shared/schema";
+import { getQueryFn, apiRequest, queryClient } from "../lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
 
 type AuthContextType = {
-  user: SelectUser | null;
+  user: User | null;
   isLoading: boolean;
   error: Error | null;
-  loginMutation: UseMutationResult<SelectUser, Error, LoginData>;
+  loginMutation: UseMutationResult<User, Error, LoginData>;
   logoutMutation: UseMutationResult<void, Error, void>;
+  registerMutation: UseMutationResult<User, Error, RegisterData>;
 };
 
 type LoginData = {
@@ -21,35 +23,30 @@ type LoginData = {
   password: string;
 };
 
+type RegisterData = z.infer<typeof insertUserSchema>;
+
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const { toast } = useToast();
+  
+  // Запрос данных текущего пользователя
   const {
     data: user,
     error,
     isLoading,
-  } = useQuery({
+  } = useQuery<User | null, Error>({
     queryKey: ["/api/user"],
-    queryFn: async () => {
-      try {
-        const res = await fetch("/api/user");
-        if (res.status === 401) return null;
-        if (!res.ok) throw new Error("Failed to fetch user data");
-        return await res.json();
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        return null;
-      }
-    },
+    queryFn: getQueryFn<User | null>({ on401: "returnNull" }),
   });
 
+  // Мутация для входа в систему
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginData) => {
       const res = await apiRequest("POST", "/api/login", credentials);
       return await res.json();
     },
-    onSuccess: (user: SelectUser) => {
+    onSuccess: (user: User) => {
       queryClient.setQueryData(["/api/user"], user);
       toast({
         title: "Успешный вход",
@@ -59,12 +56,35 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     onError: (error: Error) => {
       toast({
         title: "Ошибка входа",
-        description: error.message || "Неверное имя пользователя или пароль",
+        description: "Неверное имя пользователя или пароль",
         variant: "destructive",
       });
     },
   });
 
+  // Мутация для регистрации
+  const registerMutation = useMutation({
+    mutationFn: async (userData: RegisterData) => {
+      const res = await apiRequest("POST", "/api/register", userData);
+      return await res.json();
+    },
+    onSuccess: (user: User) => {
+      queryClient.setQueryData(["/api/user"], user);
+      toast({
+        title: "Регистрация выполнена",
+        description: `Аккаунт ${user.username} успешно создан!`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Ошибка регистрации",
+        description: error.message || "Не удалось создать аккаунт",
+        variant: "destructive",
+      });
+    },
+  });
+
+  // Мутация для выхода из системы
   const logoutMutation = useMutation({
     mutationFn: async () => {
       await apiRequest("POST", "/api/logout");
@@ -88,11 +108,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        user: user ?? null,
+        user,
         isLoading,
         error,
         loginMutation,
         logoutMutation,
+        registerMutation,
       }}
     >
       {children}
@@ -103,7 +124,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuth должен использоваться внутри AuthProvider");
   }
   return context;
 }
