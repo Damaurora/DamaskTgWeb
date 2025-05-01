@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Category } from "@shared/schema";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -22,9 +22,16 @@ export default function CategoryNav({
   showTitle = true,
   containerClass = "py-4 px-4"
 }: CategoryNavProps) {
+  const [, setLocation] = useLocation();
   const { data: categories, isLoading } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
+  
+  // Функция для перехода к категории без полной перезагрузки страницы
+  const navigateToCategory = (slug: string) => {
+    window.scrollTo(0, 0);
+    setLocation(`/category/${slug}`);
+  };
   
   const getIconComponent = (iconName: string) => {
     switch (iconName) {
@@ -78,27 +85,27 @@ export default function CategoryNav({
       {showTitle && <h2 className="text-xl font-unbounded font-bold mb-4">{title}</h2>}
       
       <div className="categories-carousel flex overflow-x-auto gap-3 pb-4">
-        <Link 
-          href="/#products"
-          className={`flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === undefined ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+        <div 
+          onClick={() => setLocation("/#products")}
+          className={`cursor-pointer flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === undefined ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
         >
           <div className={`w-16 h-16 rounded-full ${currentSlug === undefined ? 'bg-primary/30' : 'bg-primary/20'} flex items-center justify-center hover:bg-primary/30 transition-colors`}>
             <PackageIcon className="h-6 w-6 text-primary" />
           </div>
           <span className="text-xs text-center">Все товары</span>
-        </Link>
+        </div>
         
         {categories.map((category) => (
-          <Link 
+          <div 
             key={category.id} 
-            href={`/category/${category.slug}`}
-            className={`flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === category.slug ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+            onClick={() => navigateToCategory(category.slug)}
+            className={`cursor-pointer flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === category.slug ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
           >
             <div className={`w-16 h-16 rounded-full ${currentSlug === category.slug ? 'bg-primary/30' : 'bg-[hsl(var(--light-bg))]'} flex items-center justify-center hover:bg-primary/20 transition-colors`}>
               {getIconComponent(category.icon)}
             </div>
             <span className="text-xs text-center">{category.name}</span>
-          </Link>
+          </div>
         ))}
       </div>
     </section>

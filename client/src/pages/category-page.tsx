@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, Link } from "wouter";
+import { useParams, Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
@@ -12,6 +12,7 @@ import { defaultCategoryImages } from "@/lib/data";
 
 export default function CategoryPage() {
   const { slug } = useParams();
+  const [, navigate] = useLocation();
   const [notFound, setNotFound] = useState(false);
   const pageTopRef = useRef<HTMLDivElement>(null);
   
@@ -36,6 +37,11 @@ export default function CategoryPage() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+  
+  const navigateToCategory = (slug: string) => {
+    window.scrollTo(0, 0);
+    setLocation(`/category/${slug}`);
+  };
   
   if (notFound) {
     return (
