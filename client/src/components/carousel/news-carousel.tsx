@@ -64,7 +64,9 @@ export default function NewsCarousel() {
     
     return () => {
       clearInterval(intervalId2);
-      if (intervalId) clearInterval(intervalId);
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
       container.removeEventListener('mouseenter', handleInteraction);
       container.removeEventListener('touchstart', handleInteraction);
       container.removeEventListener('mouseleave', handleEndInteraction);
