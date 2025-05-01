@@ -19,6 +19,7 @@ export interface ContactInfo {
 export interface IStorage {
   // Users (Admin)
   getUserByUsername(username: string): Promise<User | undefined>;
+  getUserById(id: number): Promise<User | undefined>; 
   verifyUser(username: string, password: string): Promise<User | undefined>;
   
   // Categories
