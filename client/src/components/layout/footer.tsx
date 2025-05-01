@@ -36,12 +36,16 @@ export default function Footer() {
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <Link href="/" className="flex items-center mb-4">
-              <FireLogo className="w-8 h-8 mr-2" onClick={handleSecretClick} />
-              <h3 className="text-xl font-unbounded font-bold text-white">
-                <span className="text-primary">DAMASK</span> SHOP
-              </h3>
-            </Link>
+            <div className="flex items-center mb-4">
+              <div onClick={handleSecretClick} className="cursor-pointer">
+                <FireLogo className="w-8 h-8 mr-2" />
+              </div>
+              <Link href="/">
+                <h3 className="text-xl font-unbounded font-bold text-white">
+                  <span className="text-primary">DAMASK</span> SHOP
+                </h3>
+              </Link>
+            </div>
             <p className="text-gray-400 text-sm mb-4">
               Премиальный магазин вейп товаров с широким ассортиментом и профессиональной консультацией.
             </p>
