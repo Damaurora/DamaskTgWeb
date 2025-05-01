@@ -506,6 +506,10 @@ export class MemStorage implements IStorage {
   async getUserByUsername(username: string): Promise<User | undefined> {
     return Array.from(this.users.values()).find(u => u.username === username);
   }
+  
+  async getUserById(id: number): Promise<User | undefined> {
+    return this.users.get(id);
+  }
 
   async verifyUser(username: string, password: string): Promise<User | undefined> {
     const user = await this.getUserByUsername(username);
@@ -636,6 +640,8 @@ export class MemStorage implements IStorage {
   }
   
   // Contact Info
+  // Функциональность перенесена в соответствующие места, оставлено для избежания ошибок
+  
   async getContactInfo(): Promise<ContactInfo> {
     return this.contactInfo;
   }
