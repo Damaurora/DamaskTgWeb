@@ -19,7 +19,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/categories/id/:id", async (req, res) => {
+  app.get("/api/category-by-id/:id", async (req, res) => {
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {
