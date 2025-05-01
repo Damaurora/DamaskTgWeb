@@ -39,8 +39,7 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
   
-  // Get first 2 categories for featured products
-  const featuredCategories = categories?.slice(0, 2);
+  // не используется
   
   return (
     <AnimatePresence>
@@ -53,16 +52,14 @@ export default function Home() {
         <NewsCarousel />
         <CategoryNav />
         
-        {/* Featured Product Categories */}
-        {featuredCategories?.map(category => (
+        {/* All Products */}
+        <div id="products">
           <ProductGrid
-            key={category.id}
-            categoryId={category.id}
-            categorySlug={category.slug}
-            title={category.name}
-            limit={4}
+            title="Все товары"
+            limit={12}
+            showViewAll={false}
           />
-        ))}
+        </div>
         
         {/* Locations Section */}
         <section className="py-8 px-4 bg-[hsl(var(--dark-bg))]" id="locations">

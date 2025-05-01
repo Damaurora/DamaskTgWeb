@@ -44,6 +44,10 @@ export default function CategoryNav() {
       <section className="py-4 px-4" id="products">
         <h2 className="text-xl font-unbounded font-bold mb-4">Категории</h2>
         <div className="flex overflow-x-auto gap-3 pb-4">
+          <div className="flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2">
+            <Skeleton className="w-16 h-16 rounded-full bg-primary/10" />
+            <Skeleton className="h-4 w-16" />
+          </div>
           {[1, 2, 3, 4, 5].map(i => (
             <div key={i} className="flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2">
               <Skeleton className="w-16 h-16 rounded-full" />
@@ -62,6 +66,16 @@ export default function CategoryNav() {
       <h2 className="text-xl font-unbounded font-bold mb-4">Категории</h2>
       
       <div className="categories-carousel flex overflow-x-auto gap-3 pb-4">
+        <Link 
+          href="/#products"
+          className="flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2"
+        >
+          <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center hover:bg-primary/30 transition-colors">
+            <PackageIcon className="h-6 w-6 text-primary" />
+          </div>
+          <span className="text-xs text-center">Все товары</span>
+        </Link>
+        
         {categories.map((category) => (
           <Link 
             key={category.id} 

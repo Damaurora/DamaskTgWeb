@@ -80,6 +80,11 @@ export default function Header() {
                   Главная
                 </Link>
               </li>
+              <li>
+                <Link href="/#products" className="block py-2 text-white hover:text-primary transition-colors font-medium">
+                  Все товары
+                </Link>
+              </li>
               {categories?.map((category: any) => (
                 <li key={category.id}>
                   <Link 
