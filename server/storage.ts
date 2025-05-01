@@ -208,7 +208,8 @@ export class MemStorage implements IStorage {
         description: "Сверхкомпактный под",
         imageUrl: "https://images.unsplash.com/photo-1563488225051-a3ec1238337e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "15W", capacity: "2ml" }
       },
       {
@@ -217,7 +218,8 @@ export class MemStorage implements IStorage {
         description: "Защищенный под",
         imageUrl: "https://images.unsplash.com/photo-1616711906333-23cf81d0fb4e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "100W", capacity: "5ml" }
       },
       {
@@ -474,6 +476,19 @@ export class MemStorage implements IStorage {
   }
   
   // Products
+  // Users methods
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(u => u.username === username);
+  }
+
+  async verifyUser(username: string, password: string): Promise<User | undefined> {
+    const user = await this.getUserByUsername(username);
+    if (user && user.password === password) {
+      return user;
+    }
+    return undefined;
+  }
+  
   async getAllProducts(): Promise<Product[]> {
     return Array.from(this.products.values());
   }
@@ -518,9 +533,90 @@ export class MemStorage implements IStorage {
     return Array.from(this.locations.values());
   }
   
+  async getLocationById(id: number): Promise<Location | undefined> {
+    return this.locations.get(id);
+  }
+  
+  async createLocation(location: InsertLocation): Promise<Location> {
+    const newLocation: Location = { ...location, id: this.locationId++ };
+    this.locations.set(newLocation.id, newLocation);
+    return newLocation;
+  }
+  
+  async updateLocation(id: number, location: Partial<InsertLocation>): Promise<Location | undefined> {
+    const existingLocation = this.locations.get(id);
+    if (!existingLocation) return undefined;
+    
+    const updatedLocation = { ...existingLocation, ...location };
+    this.locations.set(id, updatedLocation);
+    return updatedLocation;
+  }
+  
+  async deleteLocation(id: number): Promise<boolean> {
+    return this.locations.delete(id);
+  }
+  
   // News
   async getAllNews(): Promise<News[]> {
     return Array.from(this.newsItems.values());
+  }
+  
+  async getNewsById(id: number): Promise<News | undefined> {
+    return this.newsItems.get(id);
+  }
+  
+  async createNews(news: InsertNews): Promise<News> {
+    const newNews: News = { ...news, id: this.newsId++ };
+    this.newsItems.set(newNews.id, newNews);
+    return newNews;
+  }
+  
+  async updateNews(id: number, news: Partial<InsertNews>): Promise<News | undefined> {
+    const existingNews = this.newsItems.get(id);
+    if (!existingNews) return undefined;
+    
+    const updatedNews = { ...existingNews, ...news };
+    this.newsItems.set(id, updatedNews);
+    return updatedNews;
+  }
+  
+  async deleteNews(id: number): Promise<boolean> {
+    return this.newsItems.delete(id);
+  }
+  
+  // Categories
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const newCategory: Category = { ...category, id: this.categoryId++ };
+    this.categories.set(newCategory.id, newCategory);
+    return newCategory;
+  }
+  
+  async updateCategory(id: number, category: Partial<InsertCategory>): Promise<Category | undefined> {
+    const existingCategory = this.categories.get(id);
+    if (!existingCategory) return undefined;
+    
+    const updatedCategory = { ...existingCategory, ...category };
+    this.categories.set(id, updatedCategory);
+    return updatedCategory;
+  }
+  
+  async deleteCategory(id: number): Promise<boolean> {
+    return this.categories.delete(id);
+  }
+  
+  // Product by ID
+  async getProductById(id: number): Promise<Product | undefined> {
+    return this.products.get(id);
+  }
+  
+  // Contact Info
+  async getContactInfo(): Promise<ContactInfo> {
+    return this.contactInfo;
+  }
+  
+  async updateContactInfo(contactInfo: Partial<ContactInfo>): Promise<ContactInfo> {
+    this.contactInfo = { ...this.contactInfo, ...contactInfo };
+    return this.contactInfo;
   }
 }
 
