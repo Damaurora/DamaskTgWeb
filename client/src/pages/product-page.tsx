@@ -21,6 +21,12 @@ export default function ProductPage() {
     onError: () => setNotFound(true),
   });
   
+  // Query the category for this product (для навигации назад)
+  const { data: category } = useQuery<Category>({
+    queryKey: [`/api/categories/${product?.categoryId}`],
+    enabled: !!product?.categoryId,
+  });
+  
   // Предотвращение автоматического скролла при переходе на страницу
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,10 +72,16 @@ export default function ProductPage() {
         <Button 
           variant="ghost" 
           className="flex items-center gap-2"
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            if (category) {
+              navigate(`/category/${category.slug}`);
+            } else {
+              navigate("/"); // Если категория не найдена, вернемся на главную
+            }
+          }}
         >
           <ArrowLeft className="h-4 w-4" />
-          Назад
+          {category ? `Назад к ${category.name}` : "Назад"}
         </Button>
       </div>
       
