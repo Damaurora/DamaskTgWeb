@@ -87,19 +87,12 @@ export default function CategoryNav({
       <div className="categories-carousel flex overflow-x-auto gap-3 pb-4">
         <div 
           onClick={() => {
-            // При клике на "Все товары" переходим на главную страницу и прокручиваем к секции товаров
-            navigate("/");
-            // Делаем небольшую задержку перед прокруткой, чтобы страница успела загрузиться
-            setTimeout(() => {
-              const productsElement = document.getElementById('products');
-              if (productsElement) {
-                productsElement.scrollIntoView({ behavior: 'smooth' });
-              }
-            }, 100);
+            // При клике на "Все товары" переходим на главную страницу и добавляем параметр для прокрутки к товарам
+            navigate("/?scroll_to_products=true");
           }}
-          className={`cursor-pointer flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${!currentSlug ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
+          className={`cursor-pointer flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === undefined || window.location.pathname === '/' ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
         >
-          <div className={`w-16 h-16 rounded-full ${!currentSlug ? 'bg-primary/30' : 'bg-primary/20'} flex items-center justify-center hover:bg-primary/30 transition-colors`}>
+          <div className={`w-16 h-16 rounded-full ${currentSlug === undefined || window.location.pathname === '/' ? 'bg-primary/30' : 'bg-primary/20'} flex items-center justify-center hover:bg-primary/30 transition-colors`}>
             <PackageIcon className="h-6 w-6 text-primary" />
           </div>
           <span className="text-xs text-center">Все товары</span>

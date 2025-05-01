@@ -23,14 +23,29 @@ export default function Home() {
     queryKey: ["/api/locations"],
   });
   
-  // Scroll to section if hash is present in URL
+  // Scroll to section if hash is present in URL or if coming from products view
   useEffect(() => {
+    // Проверяем hash в URL
     if (location.includes("#")) {
       const id = location.split("#")[1];
       const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
+    } 
+    
+    // Проверяем, есть ли параметр scroll_to_products в URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('scroll_to_products') === 'true') {
+      setTimeout(() => {
+        const productsElement = document.getElementById('products');
+        if (productsElement) {
+          productsElement.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+      
+      // Очищаем параметр из URL
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [location]);
   
