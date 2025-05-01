@@ -5,6 +5,7 @@ export interface IStorage {
   // Categories
   getAllCategories(): Promise<Category[]>;
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
+  getCategoryById(id: number): Promise<Category | undefined>;
   
   // Products
   getAllProducts(): Promise<Product[]>;
@@ -410,6 +411,10 @@ export class MemStorage implements IStorage {
   
   async getCategoryBySlug(slug: string): Promise<Category | undefined> {
     return Array.from(this.categories.values()).find(cat => cat.slug === slug);
+  }
+  
+  async getCategoryById(id: number): Promise<Category | undefined> {
+    return this.categories.get(id);
   }
   
   // Products

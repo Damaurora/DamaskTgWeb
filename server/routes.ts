@@ -19,10 +19,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  app.get("/api/categories/:slug", async (req, res) => {
+  app.get("/api/categories/id/:id", async (req, res) => {
     try {
-      const { slug } = req.params;
-      const category = await storage.getCategoryBySlug(slug);
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Неверный ID категории" });
+      }
+      
+      const category = await storage.getCategoryById(id);
       
       if (!category) {
         return res.status(404).json({ message: "Категория не найдена" });
