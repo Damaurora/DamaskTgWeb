@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { getRandomInteriorImage } from "@/lib/images";
 
@@ -26,15 +25,19 @@ export default function HeroSection() {
         <p className="text-lg md:text-xl text-gray-200 mb-6 max-w-lg">
           Премиальные вейп товары в Москве
         </p>
-        <Link href="#products">
-          <motion.a 
-            className="px-6 py-3 bg-primary text-white font-medium rounded-full hover:bg-accent transition-colors neon-glow"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Смотреть каталог
-          </motion.a>
-        </Link>
+        <motion.button 
+          className="px-6 py-3 bg-primary text-white font-medium rounded-full hover:bg-accent transition-colors neon-glow"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => {
+            const productsElement = document.getElementById('products');
+            if (productsElement) {
+              productsElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
+          Смотреть каталог
+        </motion.button>
       </motion.div>
     </section>
   );
