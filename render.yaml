@@ -1,12 +1,13 @@
 services:
   - type: web
     name: damask-shop
-    env: node
-    buildCommand: npm install && npm run build
-    startCommand: node dist/server.js
+    runtime: docker
+    plan: free
     envVars:
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: 8080
       - key: SESSION_SECRET
         generateValue: true
-    staticPublishPath: ./dist/client
+    healthCheckPath: /
