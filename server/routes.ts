@@ -38,6 +38,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  app.get("/api/categories/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const category = await storage.getCategoryBySlug(slug);
+      
+      if (!category) {
+        return res.status(404).json({ message: "Категория не найдена" });
+      }
+      
+      res.json(category);
+    } catch (error) {
+      res.status(500).json({ message: "Ошибка при получении категории" });
+    }
+  });
+  
   // Products
   app.get("/api/products", async (req, res) => {
     try {

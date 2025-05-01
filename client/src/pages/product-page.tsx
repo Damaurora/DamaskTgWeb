@@ -23,7 +23,7 @@ export default function ProductPage() {
   
   // Query the category for this product (для навигации назад)
   const { data: category } = useQuery<Category>({
-    queryKey: [`/api/categories/${product?.categoryId}`],
+    queryKey: [`/api/categories/id/${product?.categoryId}`],
     enabled: !!product?.categoryId,
   });
   
