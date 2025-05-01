@@ -1,16 +1,39 @@
-import { categories, products, locations, news } from "@shared/schema";
-import type { Category, InsertCategory, Product, InsertProduct, Location, InsertLocation, News, InsertNews } from "@shared/schema";
+import { categories, products, locations, news, users } from "@shared/schema";
+import type { 
+  Category, InsertCategory, 
+  Product, InsertProduct, 
+  Location, InsertLocation, 
+  News, InsertNews,
+  User, InsertUser
+} from "@shared/schema";
+
+// Интерфейс для контактной информации
+export interface ContactInfo {
+  address: string;
+  phone: string;
+  email: string;
+  workingHours: string;
+  logoSvg: string;
+}
 
 export interface IStorage {
+  // Users (Admin)
+  getUserByUsername(username: string): Promise<User | undefined>;
+  verifyUser(username: string, password: string): Promise<User | undefined>;
+  
   // Categories
   getAllCategories(): Promise<Category[]>;
   getCategoryBySlug(slug: string): Promise<Category | undefined>;
   getCategoryById(id: number): Promise<Category | undefined>;
+  createCategory(category: InsertCategory): Promise<Category>;
+  updateCategory(id: number, category: Partial<InsertCategory>): Promise<Category | undefined>;
+  deleteCategory(id: number): Promise<boolean>;
   
   // Products
   getAllProducts(): Promise<Product[]>;
   getProductsByCategory(categoryId: number): Promise<Product[]>;
   getProductBySlug(slug: string): Promise<Product | undefined>;
+  getProductById(id: number): Promise<Product | undefined>; 
   searchProducts(query: string): Promise<Product[]>;
   createProduct(product: InsertProduct): Promise<Product>;
   updateProduct(id: number, product: Partial<InsertProduct>): Promise<Product | undefined>;
@@ -18,34 +41,67 @@ export interface IStorage {
   
   // Locations
   getAllLocations(): Promise<Location[]>;
+  getLocationById(id: number): Promise<Location | undefined>;
+  createLocation(location: InsertLocation): Promise<Location>;
+  updateLocation(id: number, location: Partial<InsertLocation>): Promise<Location | undefined>;
+  deleteLocation(id: number): Promise<boolean>;
   
   // News
   getAllNews(): Promise<News[]>;
+  getNewsById(id: number): Promise<News | undefined>;
+  createNews(news: InsertNews): Promise<News>;
+  updateNews(id: number, news: Partial<InsertNews>): Promise<News | undefined>;
+  deleteNews(id: number): Promise<boolean>;
+  
+  // Contact Info
+  getContactInfo(): Promise<ContactInfo>;
+  updateContactInfo(contactInfo: Partial<ContactInfo>): Promise<ContactInfo>;
 }
 
 // In-memory database implementation
 export class MemStorage implements IStorage {
+  private users: Map<number, User>;
   private categories: Map<number, Category>;
   private products: Map<number, Product>;
   private locations: Map<number, Location>;
   private newsItems: Map<number, News>;
+  private contactInfo: ContactInfo;
   
+  private userId: number = 1;
   private categoryId: number = 1;
   private productId: number = 1;
   private locationId: number = 1;
   private newsId: number = 1;
   
   constructor() {
+    this.users = new Map();
     this.categories = new Map();
     this.products = new Map();
     this.locations = new Map();
     this.newsItems = new Map();
+    
+    // Контактная информация по умолчанию
+    this.contactInfo = {
+      address: "ул. Центральная, 10, Москва",
+      phone: "+7 (800) 123-45-67",
+      email: "info@damask-shop.ru",
+      workingHours: "Пн-Пт: 10:00 - 20:00, Сб-Вс: 10:00 - 18:00",
+      logoSvg: '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="40" viewBox="0 0 100 40" fill="none"><path d="M20.5 8H32C35.866 8 39 11.134 39 15V25C39 28.866 35.866 32 32 32H20.5C16.634 32 13.5 28.866 13.5 25V15C13.5 11.134 16.634 8 20.5 8Z" fill="#FF6B00"/><path d="M48 12H61C63.761 12 66 14.239 66 17V23C66 25.761 63.761 28 61 28H48C45.239 28 43 25.761 43 23V17C43 14.239 45.239 12 48 12Z" fill="#FF6B00"/><path d="M76 16H84C85.657 16 87 17.343 87 19V21C87 22.657 85.657 24 84 24H76C74.343 24 73 22.657 73 21V19C73 17.343 74.343 16 76 16Z" fill="#FF6B00"/></svg>'
+    };
     
     // Initialize with default data
     this.initializeData();
   }
   
   private initializeData() {
+    // Добавляем администратора
+    const adminUser: User = {
+      id: this.userId++,
+      username: "admin",
+      password: "321" // В реальном приложении пароль должен быть хэширован
+    };
+    this.users.set(adminUser.id, adminUser);
+    
     // Add categories
     const categoryData: InsertCategory[] = [
       { name: "Поды", slug: "pods", icon: "crown" },
