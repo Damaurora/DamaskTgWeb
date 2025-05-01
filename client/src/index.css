@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 10%;
+    --foreground: 0 0% 100%;
+    --card: 240 10% 14%;
+    --card-foreground: 0 0% 100%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 24 100% 50%;
+    --primary-foreground: 211 100% 99%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 24 100% 60%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 24 100% 50%;
+    --radius: 0.75rem;
+    
+    /* Custom colors */
+    --dark-bg: 0 0% 7%;
+    --light-bg: 0 0% 14%;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Unbounded', cursive;
+  }
+
+  p, span, div, a, button, input {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .news-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .news-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .categories-carousel {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .categories-carousel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .neon-glow {
+    box-shadow: 0 0 10px hsl(var(--primary)), 0 0 20px hsla(var(--primary) / 0.5);
+  }
+  
+  .product-card {
+    @apply transition-all duration-300;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px hsla(var(--primary) / 0.5);
+  }
+}
