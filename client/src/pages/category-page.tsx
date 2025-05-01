@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -6,12 +6,14 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductCard from "@/components/products/product-card";
+import CategoryNav from "@/components/category/category-nav";
 import { Product, Category } from "@shared/schema";
 import { defaultCategoryImages } from "@/lib/data";
 
 export default function CategoryPage() {
   const { slug } = useParams();
   const [notFound, setNotFound] = useState(false);
+  const pageTopRef = useRef<HTMLDivElement>(null);
   
   // Query the category
   const { data: category, isLoading: categoryLoading } = useQuery<Category>({
@@ -29,6 +31,11 @@ export default function CategoryPage() {
   
   // Get background image for the category
   const bgImage = defaultCategoryImages[slug ?? ''] || defaultCategoryImages.accessories;
+  
+  // Предотвращение автоматического скролла при переходе на страницу
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
   
   if (notFound) {
     return (
@@ -78,6 +85,15 @@ export default function CategoryPage() {
             Назад
           </Button>
         </Link>
+      </div>
+      
+      {/* Category Navigation */}
+      <div ref={pageTopRef}>
+        <CategoryNav 
+          currentSlug={slug} 
+          title="Выберите категорию"
+          containerClass="py-2 px-4"
+        />
       </div>
       
       {/* Products */}

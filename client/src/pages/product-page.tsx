@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { motion } from "framer-motion";
@@ -6,11 +6,13 @@ import { ArrowLeft, Box, Shield, Activity, Battery, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ProductGrid from "@/components/products/product-grid";
+import CategoryNav from "@/components/category/category-nav";
 import { Product, Category } from "@shared/schema";
 
 export default function ProductPage() {
   const { slug } = useParams();
   const [notFound, setNotFound] = useState(false);
+  const pageTopRef = useRef<HTMLDivElement>(null);
   
   // Query the product
   const { data: product, isLoading } = useQuery<Product>({
@@ -23,6 +25,11 @@ export default function ProductPage() {
     queryKey: [`/api/categories/${product?.categoryId}`],
     enabled: !!product?.categoryId,
   });
+  
+  // Предотвращение автоматического скролла при переходе на страницу
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
   
   // Format features for display
   const getFeatureIcon = (key: string) => {
