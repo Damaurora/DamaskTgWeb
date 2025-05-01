@@ -12,6 +12,9 @@ import {
   Users,
   LogOut
 } from "lucide-react";
+import ProductManagement from "@/components/admin/product-management";
+import CategoryManagement from "@/components/admin/category-management";
+import NewsManagement from "@/components/admin/news-management";
 
 export default function AdminDashboard() {
   const { user, logoutMutation } = useAuth();
@@ -137,9 +140,7 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-center text-muted-foreground py-12">
-                Содержимое раздела управления товарами будет доступно в скором времени
-              </p>
+              <ProductManagement />
             </CardContent>
           </Card>
         </TabsContent>
@@ -153,9 +154,7 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-center text-muted-foreground py-12">
-                Содержимое раздела управления категориями будет доступно в скором времени
-              </p>
+              <CategoryManagement />
             </CardContent>
           </Card>
         </TabsContent>
@@ -185,9 +184,7 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-center text-muted-foreground py-12">
-                Содержимое раздела управления новостями будет доступно в скором времени
-              </p>
+              <NewsManagement />
             </CardContent>
           </Card>
         </TabsContent>

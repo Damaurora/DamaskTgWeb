@@ -40,9 +40,12 @@ export const products = pgTable("products", {
   // Ожидается ли поставка, если нет в наличии
   expectedGagarina: boolean("expected_gagarina").default(false).notNull(),
   expectedPobedy: boolean("expected_pobedy").default(false).notNull(),
+  // Ожидаемая дата поставки
+  expectedDelivery: text("expected_delivery"),
   // Метки товара
   isNew: boolean("is_new").default(false).notNull(),
   isTop: boolean("is_top").default(false).notNull(),
+  isRecommended: boolean("is_recommended").default(false).notNull(),
   features: jsonb("features"),
 });
 

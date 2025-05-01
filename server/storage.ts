@@ -540,7 +540,21 @@ export class MemStorage implements IStorage {
   }
   
   async createProduct(product: InsertProduct): Promise<Product> {
-    const newProduct: Product = { ...product, id: this.productId++ };
+    // Обеспечиваем дефолтные значения для не указанных полей
+    const newProduct: Product = { 
+      ...product, 
+      id: this.productId++,
+      fullDescription: product.fullDescription || null,
+      availabilityGagarina: product.availabilityGagarina ?? false,
+      availabilityPobedy: product.availabilityPobedy ?? false,
+      expectedGagarina: product.expectedGagarina ?? false,
+      expectedPobedy: product.expectedPobedy ?? false,
+      isNew: product.isNew ?? false,
+      isTop: product.isTop ?? false,
+      isRecommended: product.isRecommended ?? false,
+      expectedDelivery: product.expectedDelivery || null,
+      features: product.features || {}
+    };
     this.products.set(newProduct.id, newProduct);
     return newProduct;
   }
