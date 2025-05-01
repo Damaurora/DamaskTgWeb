@@ -21,12 +21,6 @@ export default function ProductPage() {
     onError: () => setNotFound(true),
   });
   
-  // Query the category for this product
-  const { data: category } = useQuery<Category>({
-    queryKey: [`/api/categories/${product?.categoryId}`],
-    enabled: !!product?.categoryId,
-  });
-  
   // Предотвращение автоматического скролла при переходе на страницу
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -67,24 +61,16 @@ export default function ProductPage() {
   
   return (
     <PageTransition>
+      {/* Верхняя навигационная панель с кнопкой назад */}
       <div className="container mx-auto px-4 py-4">
         <Button 
           variant="ghost" 
           className="flex items-center gap-2"
-          onClick={() => navigate(category ? `/category/${category.slug}` : "/")}
+          onClick={() => navigate(-1)}
         >
           <ArrowLeft className="h-4 w-4" />
-          {category ? `Назад к ${category.name}` : "Назад"}
+          Назад
         </Button>
-      </div>
-      
-      {/* Category Navigation */}
-      <div ref={pageTopRef}>
-        <CategoryNav 
-          currentSlug={category?.slug} 
-          title="Выберите категорию"
-          containerClass="py-2 px-4"
-        />
       </div>
       
       {isLoading ? (
@@ -172,14 +158,6 @@ export default function ProductPage() {
                   >
                     Уточнить
                   </Button>
-                  
-                  <Button 
-                    variant="outline"
-                    className="ml-3"
-                    onClick={() => navigate(-1)}
-                  >
-                    Назад
-                  </Button>
                 </div>
               </div>
             </div>
@@ -187,18 +165,7 @@ export default function ProductPage() {
         </div>
       ) : null}
       
-      {/* Related products */}
-      {category && (
-        <div className="mt-8 mb-16">
-          <ProductGrid
-            categoryId={category.id}
-            categorySlug={category.slug}
-            title="Похожие товары"
-            limit={4}
-            showViewAll={true}
-          />
-        </div>
-      )}
+      {/* Удалено отображение похожих товаров из той же категории */}
     </PageTransition>
   );
 }
