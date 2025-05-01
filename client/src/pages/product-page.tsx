@@ -115,10 +115,6 @@ export default function ProductPage() {
             </div>
             <div>
               <h1 className="text-3xl font-unbounded font-bold mb-2">{product.name}</h1>
-              <p className="text-sm text-gray-400 mb-4">
-                Категория: {category?.name || 'Загрузка...'}
-              </p>
-              
               <p className="text-lg mb-6">{product.description}</p>
               
               {product.features && (
@@ -138,29 +134,53 @@ export default function ProductPage() {
                 </div>
               )}
               
-              <div className="flex flex-wrap items-center gap-4 mt-8">
-                <span 
-                  className={`py-1 px-3 rounded-md ${
-                    product.availability 
-                    ? 'bg-green-800/30 text-green-500' 
-                    : 'bg-red-800/30 text-red-500'
-                  }`}
-                >
-                  {product.availability ? 'В наличии' : 'Нет в наличии'}
-                </span>
+              <div className="mt-8 space-y-4">
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-lg font-semibold">Наличие в магазинах:</h3>
+                  <div className="flex items-center gap-3">
+                    <span 
+                      className={`py-1 px-3 rounded-md ${
+                        product.availabilityGagarina 
+                        ? 'bg-green-800/30 text-green-500' 
+                        : 'bg-red-800/30 text-red-500'
+                      }`}
+                    >
+                      <span className="font-medium">Гагарина, 32:</span> {product.availabilityGagarina ? 'В наличии' : 'Нет в наличии'}
+                    </span>
+                    
+                    <span 
+                      className={`py-1 px-3 rounded-md ${
+                        product.availabilityPobedy 
+                        ? 'bg-green-800/30 text-green-500' 
+                        : 'bg-red-800/30 text-red-500'
+                      }`}
+                    >
+                      <span className="font-medium">Победы, 7:</span> {product.availabilityPobedy ? 'В наличии' : 'Нет в наличии'}
+                    </span>
+                  </div>
+                </div>
 
-                <Button 
-                  variant="default"
-                  className="mt-2 md:mt-0"
-                  onClick={() => {
-                    const managerUsername = '@Nndogss';
-                    const message = `Здравствуйте, а можно уточнить по товару "${product.name}" в вашем магазине`;
-                    const telegramUrl = `https://t.me/${managerUsername.replace('@', '')}?text=${encodeURIComponent(message)}`;
-                    window.open(telegramUrl, '_blank');
-                  }}
-                >
-                  Уточнить
-                </Button>
+                <div className="flex pt-2">
+                  <Button 
+                    variant="default"
+                    onClick={() => {
+                      const managerUsername = '@Nndogss';
+                      const message = `Здравствуйте, а можно уточнить по товару "${product.name}" в вашем магазине`;
+                      const telegramUrl = `https://t.me/${managerUsername.replace('@', '')}?text=${encodeURIComponent(message)}`;
+                      window.open(telegramUrl, '_blank');
+                    }}
+                  >
+                    Уточнить
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    className="ml-3"
+                    onClick={() => navigate(-1)}
+                  >
+                    Назад
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
