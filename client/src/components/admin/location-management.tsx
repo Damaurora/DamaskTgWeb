@@ -94,7 +94,7 @@ export default function LocationManagement() {
                   
                   <div className="flex items-start">
                     <Clock className="h-4 w-4 mr-2 mt-1 text-primary" />
-                    <p>{location.workHours}</p>
+                    <p>{location.hours}</p>
                   </div>
                   
                   {location.mapLink && (

@@ -61,6 +61,7 @@ export const locations = pgTable("locations", {
   hours: text("hours").notNull(),
   phone: text("phone").notNull(),
   imageUrl: text("image_url").notNull(),
+  mapLink: text("map_link").notNull().default(""),
 });
 
 export const insertLocationSchema = createInsertSchema(locations).omit({

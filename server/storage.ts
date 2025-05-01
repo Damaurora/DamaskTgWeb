@@ -128,14 +128,16 @@ export class MemStorage implements IStorage {
         address: "ул. Гагарина, 32",
         hours: "Пн-Пт: 10:00 - 20:00\nСб-Вс: 10:00 - 18:00",
         phone: "+78001234567",
-        imageUrl: "https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        imageUrl: "https://images.unsplash.com/photo-1621784563330-caee0b138a00?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        mapLink: "https://yandex.ru/maps/-/CDBdNMm3"
       },
       {
         name: "Победы",
         address: "ул. Победы, 7",
         hours: "Пн-Пт: 10:00 - 20:00\nСб-Вс: 10:00 - 18:00",
         phone: "+78001234568",
-        imageUrl: "https://images.unsplash.com/photo-1622877189159-37dbbd53daf8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+        imageUrl: "https://images.unsplash.com/photo-1622877189159-37dbbd53daf8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
+        mapLink: "https://yandex.ru/maps/-/CDBdNRp2"
       }
     ];
     

@@ -16,8 +16,9 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 
 // Расширяем схему для валидации формы
 const locationFormSchema = insertLocationSchema.extend({
-  workHours: z.string().min(1, "Часы работы обязательны"),
+  hours: z.string().min(1, "Часы работы обязательны"),
   phone: z.string().min(1, "Телефон обязателен"),
+  mapLink: z.string().optional(),
 });
 
 type LocationFormValues = z.infer<typeof locationFormSchema>;
@@ -37,7 +38,8 @@ export default function LocationForm({ location, onSuccess, onCancel }: Location
     name: location?.name || "",
     address: location?.address || "",
     phone: location?.phone || "",
-    workHours: location?.workHours || "",
+    hours: location?.hours || "",
+    imageUrl: location?.imageUrl || "",
     mapLink: location?.mapLink || "",
   };
 
@@ -195,12 +197,27 @@ export default function LocationForm({ location, onSuccess, onCancel }: Location
             {/* Часы работы */}
             <FormField
               control={form.control}
-              name="workHours"
+              name="hours"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Часы работы</FormLabel>
                   <FormControl>
                     <Input placeholder="Пн-Пт: 10:00 - 20:00, Сб-Вс: 10:00 - 18:00" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            {/* URL изображения */}
+            <FormField
+              control={form.control}
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>URL изображения</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://example.com/store.jpg" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
