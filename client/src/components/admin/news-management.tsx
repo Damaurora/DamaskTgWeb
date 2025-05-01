@@ -6,8 +6,26 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Plus, Edit2, Loader2, Calendar } from "lucide-react";
-import { formatDate } from "@/lib/utils";
 import NewsForm from "./news-form";
+
+// Безопасный форматтер даты
+const safeFormatDate = (dateString: string): string => {
+  try {
+    const date = new Date(dateString);
+    // Проверка на валидность даты
+    if (isNaN(date.getTime())) {
+      return dateString; // Возвращаем исходную строку, если дата некорректная
+    }
+    return date.toLocaleDateString('ru-RU', { 
+      day: '2-digit', 
+      month: 'long', 
+      year: 'numeric' 
+    });
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return dateString; // В случае ошибки возвращаем исходную строку
+  }
+};
 
 export default function NewsManagement() {
   const [activeTab, setActiveTab] = useState("list");
@@ -84,7 +102,7 @@ export default function NewsManagement() {
                 <CardContent className="p-4">
                   <div className="flex items-center text-sm text-gray-500 mb-2">
                     <Calendar className="h-4 w-4 mr-1" />
-                    <span>{formatDate(item.date)}</span>
+                    <span>{safeFormatDate(item.date)}</span>
                   </div>
                   <h3 className="font-bold text-lg mb-2">{item.title}</h3>
                   <p className="text-gray-500 text-sm mb-4 line-clamp-2">{item.content}</p>
