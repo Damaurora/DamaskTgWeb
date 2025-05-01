@@ -76,6 +76,15 @@ export default function ProductPage() {
         </Link>
       </div>
       
+      {/* Category Navigation */}
+      <div ref={pageTopRef}>
+        <CategoryNav 
+          currentSlug={category?.slug} 
+          title="Выберите категорию"
+          containerClass="py-2 px-4"
+        />
+      </div>
+      
       {isLoading ? (
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
