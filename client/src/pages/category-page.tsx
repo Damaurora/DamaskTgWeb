@@ -81,12 +81,14 @@ export default function CategoryPage() {
       
       {/* Back button */}
       <div className="container mx-auto px-4 py-4">
-        <Link href="/">
-          <Button variant="ghost" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            Назад
-          </Button>
-        </Link>
+        <Button 
+          variant="ghost" 
+          className="flex items-center gap-2"
+          onClick={() => navigate("/")}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Назад
+        </Button>
       </div>
       
       {/* Category Navigation */}
@@ -126,9 +128,12 @@ export default function CategoryPage() {
           <div className="text-center py-12">
             <h2 className="text-xl font-bold mb-2">Нет товаров в этой категории</h2>
             <p className="text-gray-400 mb-6">Скоро здесь появятся новые товары!</p>
-            <Link href="/">
-              <Button variant="default">Вернуться на главную</Button>
-            </Link>
+            <Button 
+              variant="default"
+              onClick={() => navigate("/")}
+            >
+              Вернуться на главную
+            </Button>
           </div>
         )}
       </div>

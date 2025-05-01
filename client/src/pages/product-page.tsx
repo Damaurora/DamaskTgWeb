@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, Link } from "wouter";
+import { useParams, Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import PageTransition from "@/components/ui/page-transition";
 import { ArrowLeft, Box, Shield, Activity, Battery, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -11,6 +11,7 @@ import { Product, Category } from "@shared/schema";
 
 export default function ProductPage() {
   const { slug } = useParams();
+  const [, navigate] = useLocation();
   const [notFound, setNotFound] = useState(false);
   const pageTopRef = useRef<HTMLDivElement>(null);
   
@@ -54,26 +55,27 @@ export default function ProductPage() {
       <div className="container mx-auto px-4 py-12 text-center">
         <h1 className="text-2xl font-bold mb-4">Товар не найден</h1>
         <p className="mb-6">Запрашиваемый товар не существует или был удален.</p>
-        <Link href="/">
-          <Button variant="default">Вернуться на главную</Button>
-        </Link>
+        <Button 
+          variant="default"
+          onClick={() => navigate("/")}
+        >
+          Вернуться на главную
+        </Button>
       </div>
     );
   }
   
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <PageTransition>
       <div className="container mx-auto px-4 py-4">
-        <Link href={category ? `/category/${category.slug}` : "/"}>
-          <Button variant="ghost" className="flex items-center gap-2">
-            <ArrowLeft className="h-4 w-4" />
-            {category ? `Назад к ${category.name}` : "Назад"}
-          </Button>
-        </Link>
+        <Button 
+          variant="ghost" 
+          className="flex items-center gap-2"
+          onClick={() => navigate(category ? `/category/${category.slug}` : "/")}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          {category ? `Назад к ${category.name}` : "Назад"}
+        </Button>
       </div>
       
       {/* Category Navigation */}
@@ -164,6 +166,6 @@ export default function ProductPage() {
           />
         </div>
       )}
-    </motion.div>
+    </PageTransition>
   );
 }
