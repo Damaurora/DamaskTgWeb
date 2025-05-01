@@ -228,7 +228,8 @@ export class MemStorage implements IStorage {
         description: "Фруктовый микс",
         imageUrl: "https://images.unsplash.com/photo-1595163925099-e73fbcfd4516?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: liquidCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "3mg", volume: "60ml" }
       },
       {
@@ -237,7 +238,8 @@ export class MemStorage implements IStorage {
         description: "Ягодный джем",
         imageUrl: "https://images.unsplash.com/photo-1616511132520-393748862126?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: liquidCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "6mg", volume: "100ml" }
       },
       {
@@ -246,7 +248,8 @@ export class MemStorage implements IStorage {
         description: "Десертный вкус",
         imageUrl: "https://images.unsplash.com/photo-1616049872849-7f3ff7acf2df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: liquidCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "0mg", volume: "120ml" }
       },
       {
@@ -255,7 +258,8 @@ export class MemStorage implements IStorage {
         description: "Тропический микс",
         imageUrl: "https://images.unsplash.com/photo-1617751594683-8ba22b045118?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: liquidCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "3mg", volume: "60ml" }
       },
       // Под-моды
@@ -265,7 +269,8 @@ export class MemStorage implements IStorage {
         description: "Премиальный под-мод",
         imageUrl: "https://images.unsplash.com/photo-1571126722798-ea9a57a0c463?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podModsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "100W", capacity: "6ml", battery: "Сменный 18650" }
       },
       {
@@ -274,7 +279,8 @@ export class MemStorage implements IStorage {
         description: "Стильный под-мод с кожаной вставкой",
         imageUrl: "https://images.unsplash.com/photo-1559496417-e7f25cb247f3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podModsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "80W", capacity: "4.5ml", battery: "Сменный 18650" }
       },
       {
@@ -283,7 +289,8 @@ export class MemStorage implements IStorage {
         description: "Компактный под-мод с мощным аккумулятором",
         imageUrl: "https://images.unsplash.com/photo-1603822448595-3aafe10b38e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podModsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "80W", capacity: "4ml", battery: "Встроенный 2000mAh" }
       },
       // Одноразки
@@ -293,7 +300,8 @@ export class MemStorage implements IStorage {
         description: "Популярная одноразовая электронная сигарета",
         imageUrl: "https://images.unsplash.com/photo-1567617182847-0877b1252496?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: disposablesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { puffs: "1500", nicotine: "20mg", battery: "850mAh" }
       },
       {
@@ -302,7 +310,8 @@ export class MemStorage implements IStorage {
         description: "Одноразка премиум-класса",
         imageUrl: "https://images.unsplash.com/photo-1603822252476-f74e97fcad85?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: disposablesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { puffs: "2000", nicotine: "50mg", battery: "1100mAh" }
       },
       {
@@ -311,7 +320,8 @@ export class MemStorage implements IStorage {
         description: "Компактная одноразовая электронная сигарета",
         imageUrl: "https://images.unsplash.com/photo-1605989991670-18ad2fa41021?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: disposablesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { puffs: "800", nicotine: "20mg", battery: "550mAh" }
       },
       // Табак
@@ -321,7 +331,8 @@ export class MemStorage implements IStorage {
         description: "Крепкий табак для кальяна",
         imageUrl: "https://images.unsplash.com/photo-1527099908998-5b73a5fe2a0d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: tobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { weight: "100g", strength: "Средняя", flavor: "Различные вкусы" }
       },
       {
@@ -330,7 +341,8 @@ export class MemStorage implements IStorage {
         description: "Премиальный табак для кальяна из США",
         imageUrl: "https://images.unsplash.com/photo-1581800757336-38659b6e3f52?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: tobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { weight: "100g", strength: "Лёгкая", flavor: "Сочные фрукты" }
       },
       {
@@ -339,7 +351,8 @@ export class MemStorage implements IStorage {
         description: "Табак средней крепости для длительных сессий",
         imageUrl: "https://images.unsplash.com/photo-1516013983599-41d612346f5a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: tobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { weight: "200g", strength: "Средняя", flavor: "Освежающие вкусы" }
       },
       // Кальяны
@@ -349,7 +362,8 @@ export class MemStorage implements IStorage {
         description: "Современный минималистичный кальян",
         imageUrl: "https://images.unsplash.com/photo-1588652737663-368bf25b4d86?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: hookahsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { height: "62cm", material: "Нержавеющая сталь", hoses: "1" }
       },
       {
@@ -358,7 +372,8 @@ export class MemStorage implements IStorage {
         description: "Премиальный кальян для ценителей",
         imageUrl: "https://images.unsplash.com/photo-1617047520098-8acf81db249e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: hookahsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { height: "70cm", material: "Авиационный алюминий", hoses: "2" }
       },
       {
@@ -367,7 +382,8 @@ export class MemStorage implements IStorage {
         description: "Компактный кальян для домашнего использования",
         imageUrl: "https://images.unsplash.com/photo-1527613426441-4da17471b66d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: hookahsCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { height: "45cm", material: "Нержавеющая сталь", hoses: "1" }
       },
       // Жевательный табак
@@ -377,7 +393,8 @@ export class MemStorage implements IStorage {
         description: "Очень крепкий жевательный табак",
         imageUrl: "https://images.unsplash.com/photo-1579208030877-39f6f5588036?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: chewingTobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "43mg/g", weight: "20g", flavor: "Мята" }
       },
       {
@@ -386,7 +403,8 @@ export class MemStorage implements IStorage {
         description: "Безтабачные никотиновые паучи",
         imageUrl: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: chewingTobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "16mg/g", weight: "16.8g", flavor: "Мята" }
       },
       {
@@ -395,7 +413,8 @@ export class MemStorage implements IStorage {
         description: "Крепкий снюс для опытных пользователей",
         imageUrl: "https://images.unsplash.com/photo-1584727638096-042c644eda6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: chewingTobaccoCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { nicotine: "45mg/g", weight: "19g", flavor: "Классический" }
       },
       // Вапорайзеры
@@ -405,7 +424,8 @@ export class MemStorage implements IStorage {
         description: "Премиальный вапорайзер для сухих смесей",
         imageUrl: "https://images.unsplash.com/photo-1606836591695-4d58a73eba1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: vaporizersCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { battery: "3500mAh", heatup: "15 секунд", temp: "4 режима" }
       },
       {
@@ -414,7 +434,8 @@ export class MemStorage implements IStorage {
         description: "Настольный вапорайзер высшего класса",
         imageUrl: "https://images.unsplash.com/photo-1579536568227-e9175a1d64a4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: vaporizersCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "120W", heatup: "1-2 минуты", temp: "40-230°C" }
       },
       {
@@ -423,7 +444,8 @@ export class MemStorage implements IStorage {
         description: "Компактный аналоговый вапорайзер без электроники",
         imageUrl: "https://images.unsplash.com/photo-1557687790-902ede7ab58c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: vaporizersCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { material: "Нержавеющая сталь", heating: "Внешний источник", chamber: "0.1g" }
       },
       // Аксессуары
@@ -433,7 +455,8 @@ export class MemStorage implements IStorage {
         description: "Набор для намотки спиралей",
         imageUrl: "https://images.unsplash.com/photo-1612225259857-886f3ad0ffe4?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: accessoriesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { tools: "10 инструментов", case: "Жесткий кейс", materials: "Нержавеющая сталь" }
       },
       {
@@ -442,7 +465,8 @@ export class MemStorage implements IStorage {
         description: "Калауд для кальяна премиум-класса",
         imageUrl: "https://images.unsplash.com/photo-1598797368396-5293e56c4d25?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: accessoriesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { material: "Алюминий", compatibility: "Универсальный", weight: "150g" }
       },
       {
@@ -451,7 +475,8 @@ export class MemStorage implements IStorage {
         description: "Защитный кейс для аккумуляторов",
         imageUrl: "https://images.unsplash.com/photo-1599719500956-d158a3abd0d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: accessoriesCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { capacity: "4 аккумулятора", material: "Силикон", size: "Компактный" }
       }
     ];
