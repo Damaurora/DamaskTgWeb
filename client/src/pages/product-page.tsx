@@ -56,7 +56,7 @@ export default function ProductPage() {
   
   return (
     <motion.div
-      initial={{ opacity: a0 }}
+      initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
