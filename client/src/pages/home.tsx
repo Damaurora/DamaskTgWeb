@@ -71,8 +71,8 @@ export default function Home() {
         <div id="products">
           <ProductGrid
             title="Все товары"
-            limit={12}
             showViewAll={false}
+            isHomePage={true}
           />
         </div>
         
