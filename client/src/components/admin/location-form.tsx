@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { News, InsertNews, insertNewsSchema } from "@shared/schema";
+import { Location, InsertLocation, insertLocationSchema } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -15,131 +15,115 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 // Расширяем схему для валидации формы
-const newsFormSchema = insertNewsSchema.extend({
-  date: z.string().min(1, "Дата обязательна"),
+const locationFormSchema = insertLocationSchema.extend({
+  workHours: z.string().min(1, "Часы работы обязательны"),
+  phone: z.string().min(1, "Телефон обязателен"),
 });
 
-type NewsFormValues = z.infer<typeof newsFormSchema>;
+type LocationFormValues = z.infer<typeof locationFormSchema>;
 
-type NewsFormProps = {
-  news?: News;
+type LocationFormProps = {
+  location?: Location;
   onSuccess?: () => void;
   onCancel?: () => void;
 };
 
-export default function NewsForm({ news, onSuccess, onCancel }: NewsFormProps) {
+export default function LocationForm({ location, onSuccess, onCancel }: LocationFormProps) {
   const { toast } = useToast();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   
-  // Конвертируем дату в формат YYYY-MM-DD для input type="date"
-  const formatDateForInput = (dateStr: string | undefined): string => {
-    try {
-      if (!dateStr) return new Date().toISOString().split('T')[0];
-      
-      const date = new Date(dateStr);
-      if (isNaN(date.getTime())) {
-        console.error("Invalid date:", dateStr);
-        return new Date().toISOString().split('T')[0];
-      }
-      
-      return date.toISOString().split('T')[0];
-    } catch (error) {
-      console.error("Error formatting date:", error);
-      return new Date().toISOString().split('T')[0];
-    }
-  };
-  
   // Устанавливаем начальные значения формы
-  const defaultValues: Partial<NewsFormValues> = {
-    title: news?.title || "",
-    content: news?.content || "",
-    imageUrl: news?.imageUrl || "",
-    date: formatDateForInput(news?.date),
+  const defaultValues: Partial<LocationFormValues> = {
+    name: location?.name || "",
+    address: location?.address || "",
+    phone: location?.phone || "",
+    workHours: location?.workHours || "",
+    mapLink: location?.mapLink || "",
   };
 
   // Инициализируем форму
-  const form = useForm<NewsFormValues>({
-    resolver: zodResolver(newsFormSchema),
+  const form = useForm<LocationFormValues>({
+    resolver: zodResolver(locationFormSchema),
     defaultValues,
     mode: "onChange",
   });
 
-  // Мутация для создания новой новости
+  // Мутация для создания нового магазина
   const createMutation = useMutation({
-    mutationFn: async (data: NewsFormValues) => {
-      const response = await apiRequest("POST", "/api/news", data);
+    mutationFn: async (data: LocationFormValues) => {
+      const response = await apiRequest("POST", "/api/locations", data);
       return await response.json();
     },
-    onSuccess: (newNews: News) => {
+    onSuccess: (newLocation: Location) => {
       toast({
         title: "Успешно!",
-        description: `Новость "${newNews.title}" успешно создана`,
+        description: `Магазин "${newLocation.name}" успешно создан`,
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/news"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/locations"] });
       if (onSuccess) onSuccess();
     },
     onError: (error: Error) => {
       toast({
         title: "Ошибка!",
-        description: `Не удалось создать новость: ${error.message}`,
+        description: `Не удалось создать магазин: ${error.message}`,
         variant: "destructive",
       });
     },
   });
 
-  // Мутация для обновления существующей новости
+  // Мутация для обновления существующего магазина
   const updateMutation = useMutation({
-    mutationFn: async (data: NewsFormValues) => {
+    mutationFn: async (data: LocationFormValues) => {
       const response = await apiRequest(
         "PUT",
-        `/api/news/${news?.id}`,
+        `/api/locations/${location?.id}`,
         data
       );
       return await response.json();
     },
-    onSuccess: (updatedNews: News) => {
+    onSuccess: (updatedLocation: Location) => {
       toast({
         title: "Успешно!",
-        description: `Новость "${updatedNews.title}" успешно обновлена`,
+        description: `Магазин "${updatedLocation.name}" успешно обновлен`,
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/news"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/locations"] });
       if (onSuccess) onSuccess();
     },
     onError: (error: Error) => {
       toast({
         title: "Ошибка!",
-        description: `Не удалось обновить новость: ${error.message}`,
+        description: `Не удалось обновить магазин: ${error.message}`,
         variant: "destructive",
       });
     },
   });
 
-  // Мутация для удаления новости
+  // Мутация для удаления магазина
   const deleteMutation = useMutation({
     mutationFn: async () => {
-      if (!news?.id) return;
-      await apiRequest("DELETE", `/api/news/${news.id}`);
+      if (!location?.id) return;
+      await apiRequest("DELETE", `/api/locations/${location.id}`);
     },
     onSuccess: () => {
       toast({
         title: "Успешно!",
-        description: `Новость "${news?.title}" успешно удалена`,
+        description: `Магазин "${location?.name}" успешно удален`,
       });
-      queryClient.invalidateQueries({ queryKey: ["/api/news"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/locations"] });
       if (onSuccess) onSuccess();
     },
     onError: (error: Error) => {
       toast({
         title: "Ошибка!",
-        description: `Не удалось удалить новость: ${error.message}`,
+        description: `Не удалось удалить магазин: ${error.message}`,
         variant: "destructive",
       });
     },
   });
 
   // Обработчик отправки формы
-  const onSubmit = (data: NewsFormValues) => {
-    if (news) {
+  const onSubmit = (data: LocationFormValues) => {
+    if (location) {
       updateMutation.mutate(data);
     } else {
       createMutation.mutate(data);
@@ -158,69 +142,80 @@ export default function NewsForm({ news, onSuccess, onCancel }: NewsFormProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>{news ? `Редактирование новости: ${news.title}` : "Новая новость"}</CardTitle>
+        <CardTitle>{location ? `Редактирование магазина: ${location.name}` : "Новый магазин"}</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
-            {/* Заголовок новости */}
+            {/* Название магазина */}
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Заголовок новости</FormLabel>
+                  <FormLabel>Название магазина</FormLabel>
                   <FormControl>
-                    <Input placeholder="Новая коллекция подов уже в магазине!" {...field} />
+                    <Input placeholder="Гагарина" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Содержимое новости */}
+            {/* Адрес */}
             <FormField
               control={form.control}
-              name="content"
+              name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Содержимое новости</FormLabel>
+                  <FormLabel>Адрес</FormLabel>
                   <FormControl>
-                    <Textarea 
-                      placeholder="Подробное описание новости..." 
-                      rows={5}
-                      {...field} 
-                    />
+                    <Input placeholder="ул. Гагарина, 32" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* URL изображения */}
+            {/* Телефон */}
             <FormField
               control={form.control}
-              name="imageUrl"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>URL изображения</FormLabel>
+                  <FormLabel>Телефон</FormLabel>
                   <FormControl>
-                    <Input placeholder="https://example.com/image.jpg" {...field} />
+                    <Input placeholder="+7 (999) 123-45-67" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Дата публикации */}
+            {/* Часы работы */}
             <FormField
               control={form.control}
-              name="date"
+              name="workHours"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Дата публикации</FormLabel>
+                  <FormLabel>Часы работы</FormLabel>
                   <FormControl>
-                    <Input type="date" {...field} />
+                    <Input placeholder="Пн-Пт: 10:00 - 20:00, Сб-Вс: 10:00 - 18:00" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Ссылка на карту */}
+            <FormField
+              control={form.control}
+              name="mapLink"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ссылка на карту</FormLabel>
+                  <FormControl>
+                    <Input placeholder="https://yandex.ru/maps/-/123456" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -230,7 +225,7 @@ export default function NewsForm({ news, onSuccess, onCancel }: NewsFormProps) {
 
           <CardFooter className="flex justify-between">
             <div>
-              {news && (
+              {location && (
                 <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
                   <AlertDialogTrigger asChild>
                     <Button type="button" variant="destructive">
@@ -240,9 +235,9 @@ export default function NewsForm({ news, onSuccess, onCancel }: NewsFormProps) {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Удалить новость?</AlertDialogTitle>
+                      <AlertDialogTitle>Удалить магазин?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        Вы уверены, что хотите удалить новость "{news.title}"? Это действие необратимо.
+                        Вы уверены, что хотите удалить магазин "{location.name}"? Это действие необратимо.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
@@ -260,7 +255,7 @@ export default function NewsForm({ news, onSuccess, onCancel }: NewsFormProps) {
               <Button type="submit" disabled={isLoading}>
                 {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 <Save className="mr-2 h-4 w-4" />
-                {news ? "Сохранить" : "Создать"}
+                {location ? "Сохранить" : "Создать"}
               </Button>
             </div>
           </CardFooter>

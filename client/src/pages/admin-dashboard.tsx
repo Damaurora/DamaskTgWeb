@@ -15,6 +15,7 @@ import {
 import ProductManagement from "@/components/admin/product-management";
 import CategoryManagement from "@/components/admin/category-management";
 import NewsManagement from "@/components/admin/news-management";
+import LocationManagement from "@/components/admin/location-management";
 
 export default function AdminDashboard() {
   const { user, logoutMutation } = useAuth();
@@ -168,9 +169,7 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-center text-muted-foreground py-12">
-                Содержимое раздела управления магазинами будет доступно в скором времени
-              </p>
+              <LocationManagement />
             </CardContent>
           </Card>
         </TabsContent>
