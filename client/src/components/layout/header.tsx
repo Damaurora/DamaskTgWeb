@@ -74,33 +74,44 @@ export default function Header() {
       {isMenuOpen && (
         <div className="bg-black/95 backdrop-blur-sm border-t border-gray-800">
           <nav className="container mx-auto px-4 py-4">
-            <ul className="space-y-4">
-              <li>
-                <Link href="/" className="block py-2 text-white hover:text-primary transition-colors font-medium">
-                  Главная
-                </Link>
-              </li>
-              <li>
-                <Link href="/#products" className="block py-2 text-white hover:text-primary transition-colors font-medium">
-                  Все товары
-                </Link>
-              </li>
-              {categories?.map((category: any) => (
-                <li key={category.id}>
-                  <Link 
-                    href={`/category/${category.slug}`}
-                    className="block py-2 text-white hover:text-primary transition-colors font-medium"
-                  >
-                    {category.name}
+            {/* Основная навигация */}
+            <div className="mb-6">
+              <h3 className="text-xs uppercase text-gray-500 font-semibold mb-2 tracking-wider">Навигация</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="/" className="block py-1.5 text-white hover:text-primary transition-colors font-medium">
+                    Главная
                   </Link>
                 </li>
-              ))}
-              <li>
-                <Link href="/#locations" className="block py-2 text-white hover:text-primary transition-colors font-medium">
-                  Магазины
-                </Link>
-              </li>
-            </ul>
+                <li>
+                  <Link href="/#products" className="block py-1.5 text-white hover:text-primary transition-colors font-medium">
+                    Все товары
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/#locations" className="block py-1.5 text-white hover:text-primary transition-colors font-medium">
+                    Магазины
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Категории товаров */}
+            <div className="mb-4">
+              <h3 className="text-xs uppercase text-gray-500 font-semibold mb-2 tracking-wider">Категории</h3>
+              <ul className="grid grid-cols-2 gap-x-2 gap-y-1">
+                {categories?.map((category: any) => (
+                  <li key={category.id}>
+                    <Link 
+                      href={`/category/${category.slug}`}
+                      className="block py-1.5 text-white hover:text-primary transition-colors font-medium text-sm"
+                    >
+                      {category.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
         </div>
       )}
