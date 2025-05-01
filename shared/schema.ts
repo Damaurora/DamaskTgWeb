@@ -22,7 +22,9 @@ export const products = pgTable("products", {
   description: text("description").notNull(),
   imageUrl: text("image_url").notNull(),
   categoryId: integer("category_id").notNull(),
-  availability: boolean("availability").default(true).notNull(),
+  // Заменяем одно поле наличия на два отдельных поля для каждого адреса
+  availabilityGagarina: boolean("availability_gagarina").default(true).notNull(),
+  availabilityPobedy: boolean("availability_pobedy").default(true).notNull(),
   features: jsonb("features"),
 });
 

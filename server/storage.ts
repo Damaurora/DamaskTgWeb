@@ -131,7 +131,8 @@ export class MemStorage implements IStorage {
         description: "Компактный под-система",
         imageUrl: "https://images.unsplash.com/photo-1644162066429-c919e1853483?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: true,
         features: { power: "80W", capacity: "4.5ml" }
       },
       {
@@ -140,7 +141,8 @@ export class MemStorage implements IStorage {
         description: "Мощная под-система",
         imageUrl: "https://images.unsplash.com/photo-1557506150-0eda38c07203?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
         categoryId: podCategoryId,
-        availability: true,
+        availabilityGagarina: true,
+        availabilityPobedy: false,
         features: { power: "60W", capacity: "4.5ml" }
       },
       {
