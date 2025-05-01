@@ -22,7 +22,7 @@ export default function CategoryNav({
   showTitle = true,
   containerClass = "py-4 px-4"
 }: CategoryNavProps) {
-  const [, setLocation] = useLocation();
+  const [, navigate] = useLocation();
   const { data: categories, isLoading } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
@@ -30,7 +30,7 @@ export default function CategoryNav({
   // Функция для перехода к категории без полной перезагрузки страницы
   const navigateToCategory = (slug: string) => {
     window.scrollTo(0, 0);
-    setLocation(`/category/${slug}`);
+    navigate(`/category/${slug}`);
   };
   
   const getIconComponent = (iconName: string) => {
@@ -86,7 +86,7 @@ export default function CategoryNav({
       
       <div className="categories-carousel flex overflow-x-auto gap-3 pb-4">
         <div 
-          onClick={() => setLocation("/#products")}
+          onClick={() => navigate("/#products")}
           className={`cursor-pointer flex-shrink-0 flex flex-col items-center justify-center w-20 gap-2 ${currentSlug === undefined ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
         >
           <div className={`w-16 h-16 rounded-full ${currentSlug === undefined ? 'bg-primary/30' : 'bg-primary/20'} flex items-center justify-center hover:bg-primary/30 transition-colors`}>

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams, Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
+import PageTransition from "@/components/ui/page-transition";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -40,7 +40,7 @@ export default function CategoryPage() {
   
   const navigateToCategory = (slug: string) => {
     window.scrollTo(0, 0);
-    setLocation(`/category/${slug}`);
+    navigate(`/category/${slug}`);
   };
   
   if (notFound) {
@@ -56,11 +56,7 @@ export default function CategoryPage() {
   }
   
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-    >
+    <PageTransition>
       {/* Category header */}
       <div className="relative h-[25vh] min-h-[200px] overflow-hidden">
         <div className="absolute inset-0 bg-black/60 z-10"></div>
@@ -136,6 +132,6 @@ export default function CategoryPage() {
           </div>
         )}
       </div>
-    </motion.div>
+    </PageTransition>
   );
 }
