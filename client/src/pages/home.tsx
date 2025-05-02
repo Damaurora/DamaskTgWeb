@@ -12,15 +12,15 @@ import LocationCard from "@/components/locations/location-card";
 
 export default function Home() {
   const [location, setLocation] = useLocation();
-  
+
   const { data: categories } = useQuery({
     queryKey: ["/api/categories"],
   });
-  
-  const { data: locations } = useQuery({
+
+  const { data: locations = [] } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
   });
-  
+
   // Scroll to section if hash is present in URL or if coming from products view
   useEffect(() => {
     // Проверяем hash в URL
@@ -31,7 +31,7 @@ export default function Home() {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } 
-    
+
     // Проверяем, есть ли параметр scroll_to_products в URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('scroll_to_products') === 'true') {
@@ -41,17 +41,17 @@ export default function Home() {
           productsElement.scrollIntoView({ behavior: 'smooth' });
         }
       }, 300);
-      
+
       // Очищаем параметр из URL
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }, [location]);
-  
+
   // Back to top button
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  
+
   return (
     <AnimatePresence>
       <motion.div
@@ -61,7 +61,7 @@ export default function Home() {
       >
         <NewsCarousel />
         <CategoryNav />
-        
+
         {/* All Products */}
         <div id="products">
           <ProductGrid
@@ -70,18 +70,18 @@ export default function Home() {
             isHomePage={true}
           />
         </div>
-        
+
         {/* Locations Section */}
         <section className="py-8 px-4 bg-[hsl(var(--dark-bg))]" id="locations">
           <h2 className="text-xl font-unbounded font-bold mb-6">Наши магазины</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {locations?.map(location => (
               <LocationCard key={location.id} location={location} />
             ))}
           </div>
         </section>
-        
+
         {/* Back to top button */}
         <Button
           variant="default"

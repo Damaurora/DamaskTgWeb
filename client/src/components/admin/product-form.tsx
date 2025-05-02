@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Product, InsertProduct, insertProductSchema } from "@shared/schema";
+import { Product, Category, InsertProduct, insertProductSchema } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -36,7 +36,7 @@ type ProductFormProps = {
 export default function ProductForm({ product, onSuccess, onCancel }: ProductFormProps) {
   const { toast } = useToast();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  
+
   // Получаем список категорий
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
@@ -215,7 +215,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {categories?.map((category: any) => (
+                      {categories?.map((category: Category) => (
                         <SelectItem key={category.id} value={category.id.toString()}>
                           {category.name}
                         </SelectItem>
@@ -285,7 +285,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
               {/* Наличие в магазинах */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium">Наличие в магазинах</h3>
-                
+
                 <FormField
                   control={form.control}
                   name="availabilityGagarina"
@@ -301,7 +301,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="availabilityPobedy"
@@ -322,7 +322,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
               {/* Метки и статусы */}
               <div className="space-y-4">
                 <h3 className="text-sm font-medium">Метки товара</h3>
-                
+
                 <FormField
                   control={form.control}
                   name="isNew"
@@ -338,7 +338,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="isTop"
@@ -354,7 +354,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
                     </FormItem>
                   )}
                 />
-                
+
                 <FormField
                   control={form.control}
                   name="isRecommended"

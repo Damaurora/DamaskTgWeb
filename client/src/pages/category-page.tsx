@@ -19,9 +19,8 @@ export default function CategoryPage() {
   // Query the category
   const { data: category, isLoading: categoryLoading } = useQuery<Category>({
     queryKey: [`/api/category-by-slug/${slug}`],
-    onSettled: (data, error) => {
-      if (error) setNotFound(true);
-    }
+    staleTime: Infinity,
+    onError: () => setNotFound(true)
   });
   
   // Query products by category

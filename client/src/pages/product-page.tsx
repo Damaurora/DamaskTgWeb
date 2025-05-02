@@ -14,24 +14,25 @@ export default function ProductPage() {
   const [, navigate] = useLocation();
   const [notFound, setNotFound] = useState(false);
   const pageTopRef = useRef<HTMLDivElement>(null);
-  
+
   // Query the product
-  const { data: product, isLoading } = useQuery<Product>({
-    queryKey: [`/api/products/${slug}`],
+  const { data: product, isLoading: productLoading } = useQuery<Product>({
+    queryKey: [`/api/product-by-slug/${slug}`],
+    staleTime: Infinity,
     onError: () => setNotFound(true),
   });
-  
+
   // Query the category for this product (для навигации назад)
   const { data: category } = useQuery<Category>({
     queryKey: [`/api/category-by-id/${product?.categoryId}`],
     enabled: !!product?.categoryId,
   });
-  
+
   // Предотвращение автоматического скролла при переходе на страницу
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
-  
+
   // Format features for display
   const getFeatureIcon = (key: string) => {
     switch (key.toLowerCase()) {
@@ -49,7 +50,7 @@ export default function ProductPage() {
         return <Box className="h-5 w-5 text-primary" />;
     }
   };
-  
+
   if (notFound) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
@@ -64,7 +65,7 @@ export default function ProductPage() {
       </div>
     );
   }
-  
+
   return (
     <PageTransition>
       {/* Верхняя навигационная панель с кнопкой назад */}
@@ -84,8 +85,8 @@ export default function ProductPage() {
           {category ? `Назад к ${category.name}` : "Назад"}
         </Button>
       </div>
-      
-      {isLoading ? (
+
+      {productLoading ? (
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Skeleton className="aspect-square rounded-lg" />
@@ -114,7 +115,7 @@ export default function ProductPage() {
             <div>
               <h1 className="text-3xl font-unbounded font-bold mb-2">{product.name}</h1>
               <p className="text-lg mb-6">{product.description}</p>
-              
+
               {product.features && (
                 <div className="mb-6">
                   <h2 className="text-xl font-semibold mb-3">Характеристики:</h2>
@@ -131,7 +132,7 @@ export default function ProductPage() {
                   </div>
                 </div>
               )}
-              
+
               <div className="mt-8 space-y-4">
                 <div className="flex flex-col gap-2">
                   <h3 className="text-lg font-semibold">Наличие в магазинах:</h3>
@@ -145,7 +146,7 @@ export default function ProductPage() {
                     >
                       <span className="font-medium">Гагарина, 32:</span> {product.availabilityGagarina ? 'В наличии' : 'Нет в наличии'}
                     </span>
-                    
+
                     <span 
                       className={`py-1 px-3 rounded-md ${
                         product.availabilityPobedy 
@@ -176,7 +177,7 @@ export default function ProductPage() {
           </div>
         </div>
       ) : null}
-      
+
       {/* Удалено отображение похожих товаров из той же категории */}
     </PageTransition>
   );

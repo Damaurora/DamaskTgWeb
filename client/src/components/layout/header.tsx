@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import FireLogo from "@/components/ui/fire-logo";
 import SearchDialog from "@/components/search-dialog";
 import { useQuery } from "@tanstack/react-query";
+import { Category } from "@shared/schema";
 import { Menu, Search, X } from "lucide-react";
 
 export default function Header() {
