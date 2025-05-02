@@ -4,7 +4,7 @@ import { Product } from "@shared/schema";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast"; // Corrected import statement
 import { Separator } from "@/components/ui/separator";
 import CategoryNav from "@/components/category/category-nav";
 import ProductGrid from "@/components/products/product-grid";

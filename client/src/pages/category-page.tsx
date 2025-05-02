@@ -4,7 +4,7 @@ import { Category } from "@shared/schema";
 import CategoryNav from "@/components/category/category-nav";
 import ProductGrid from "@/components/products/product-grid";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast"; // Corrected import statement
 
 export default function CategoryPage() {
   const [location] = useLocation();
