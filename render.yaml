@@ -1,7 +1,10 @@
+
 services:
   - type: web
     name: damask-shop
-    runtime: docker
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: NODE_ENV=production node dist/server/index.js
     plan: free
     envVars:
       - key: NODE_ENV
