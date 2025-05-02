@@ -23,12 +23,14 @@ export default function ProductPage() {
       }
       return response.json();
     },
-    onError: (error) => {
-      toast({
-        variant: "destructive",
-        title: "Ошибка",
-        description: error instanceof Error ? error.message : "Ошибка загрузки товара",
-      });
+    onSuccess: (data) => {
+      if (!data) {
+        toast({
+          variant: "destructive",
+          title: "Ошибка",
+          description: "Товар не найден"
+        });
+      }
     }
   });
 
