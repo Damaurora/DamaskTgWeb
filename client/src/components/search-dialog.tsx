@@ -32,6 +32,7 @@ export default function SearchDialog({ open, onOpenChange }: SearchDialogProps) 
   const { data: searchResults = [], isLoading } = useQuery<Product[]>({
     queryKey: [`/api/products?search=${searchQuery}`],
     enabled: searchQuery.length > 2,
+    initialData: [],
   });
   
   // Navigate to product page and close dialog

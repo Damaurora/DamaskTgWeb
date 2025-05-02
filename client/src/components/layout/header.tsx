@@ -14,6 +14,7 @@ export default function Header() {
 
   const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
+    initialData: [],
   });
 
   useEffect(() => {
