@@ -15,7 +15,7 @@ export default function CategoryManagement() {
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   
   // Получаем все категории
-  const { data: categories, isLoading } = useQuery({
+  const { data: categories = [], isLoading } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
   

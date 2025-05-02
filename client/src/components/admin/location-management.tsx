@@ -12,7 +12,7 @@ export default function LocationManagement() {
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
   // Получаем все магазины
-  const { data: locations, isLoading } = useQuery({
+  const { data: locations = [], isLoading } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
   });
 

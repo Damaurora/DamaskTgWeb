@@ -32,7 +32,7 @@ export default function NewsManagement() {
   const [selectedNews, setSelectedNews] = useState<News | null>(null);
   
   // Получаем все новости
-  const { data: news, isLoading } = useQuery({
+  const { data: news = [], isLoading } = useQuery<News[]>({
     queryKey: ["/api/news"],
   });
   
