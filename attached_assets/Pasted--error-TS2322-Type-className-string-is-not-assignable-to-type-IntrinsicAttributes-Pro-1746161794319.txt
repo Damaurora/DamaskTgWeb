@@ -1,0 +1,14 @@
+: error TS2322: Type '{ className: string; }' is not assignable to type 'IntrinsicAttributes'.
+  Property 'className' does not exist on type 'IntrinsicAttributes'.
+client/src/pages/category-page.tsx(23,5): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(options: DefinedInitialDataOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>, queryClient?: QueryClient | undefined): DefinedUseQueryResult<...>', gave the following error.
+    Object literal may only specify known properties, and 'onError' does not exist in type 'DefinedInitialDataOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>'.
+  Overload 2 of 3, '(options: UndefinedInitialDataOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>, queryClient?: QueryClient | undefined): UseQueryResult<...>', gave the following error.
+    Object literal may only specify known properties, and 'onError' does not exist in type 'UndefinedInitialDataOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>'.
+  Overload 3 of 3, '(options: UseQueryOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>, queryClient?: QueryClient | undefined): UseQueryResult<...>', gave the following error.
+    Object literal may only specify known properties, and 'onError' does not exist in type 'UseQueryOptions<{ id: number; name: string; icon: string; slug: string; }, Error, { id: number; name: string; icon: string; slug: string; }, readonly unknown[]>'.
+client/src/pages/category-page.tsx(23,15): error TS7006: Parameter 'error' implicitly has an 'any' type.
+client/src/pages/category-page.tsx(40,72): error TS2339: Property 'name' does not exist on type 'NonNullable<TQueryFnData>'.
+client/src/pages/category-page.tsx(41,8): error TS2741: Property 'title' is missing in type '{ categoryId: any; showViewAll: false; }' but required in type 'ProductGridProps'.
+client/src/pages/category-page.tsx(41,41): error TS2339: Property 'id' does not exist on type 'NonNullable<TQueryFnData>'.
+client/src/pages/product-page.tsx(26,5): error TS2769: No overload matches this call.
