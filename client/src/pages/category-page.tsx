@@ -11,6 +11,7 @@ export default function CategoryPage() {
   const [location] = useLocation();
   const slug = location.split("/").pop() || "";
 
+  // Получаем данные категории
   const { data: category } = useQuery<Category>({
     queryKey: [`/api/categories/${slug}`],
     queryFn: async () => {
@@ -19,15 +20,6 @@ export default function CategoryPage() {
         throw new Error("Ошибка загрузки категории");
       }
       return response.json();
-    },
-    onSuccess: (data) => {
-      if (!data) {
-        toast({
-          variant: "destructive",
-          title: "Ошибка",
-          description: "Категория не найдена"
-        });
-      }
     }
   });
 

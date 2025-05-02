@@ -22,15 +22,6 @@ export default function ProductPage() {
         throw new Error("Ошибка загрузки товара");
       }
       return response.json();
-    },
-    onSuccess: (data) => {
-      if (!data) {
-        toast({
-          variant: "destructive",
-          title: "Ошибка",
-          description: "Товар не найден"
-        });
-      }
     }
   });
 
