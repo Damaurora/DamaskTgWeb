@@ -6,7 +6,7 @@ import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function Footer() {
-  const { data: locations } = useQuery({
+  const { data: locations = [] } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
   });
   

@@ -29,7 +29,7 @@ export default function SearchDialog({ open, onOpenChange }: SearchDialogProps) 
   }, [open]);
   
   // Use the search query to filter products
-  const { data: searchResults, isLoading } = useQuery<Product[]>({
+  const { data: searchResults = [], isLoading } = useQuery<Product[]>({
     queryKey: [`/api/products?search=${searchQuery}`],
     enabled: searchQuery.length > 2,
   });

@@ -12,7 +12,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [location] = useLocation();
 
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 

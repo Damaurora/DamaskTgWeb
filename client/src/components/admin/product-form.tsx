@@ -38,7 +38,7 @@ export default function ProductForm({ product, onSuccess, onCancel }: ProductFor
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   
   // Получаем список категорий
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
 

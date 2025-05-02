@@ -31,12 +31,12 @@ export default function ProductManagement() {
   });
   
   // Получаем все товары
-  const { data: products, isLoading } = useQuery({
+  const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
   
   // Получаем все категории для фильтрации
-  const { data: categories } = useQuery({
+  const { data: categories = [] } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
   });
   
