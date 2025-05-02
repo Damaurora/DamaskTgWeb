@@ -13,30 +13,31 @@ import { iconMap } from "@/lib/data";
 export default function CategoryManagement() {
   const [activeTab, setActiveTab] = useState("list");
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
-  
+
   // Получаем все категории
   const { data: categories = [], isLoading } = useQuery<Category[]>({
     queryKey: ["/api/categories"],
+    initialData: [],
   });
-  
+
   // Обработчик создания новой категории
   const handleCreateCategory = () => {
     setSelectedCategory(null);
     setActiveTab("edit");
   };
-  
+
   // Обработчик редактирования существующей категории
   const handleEditCategory = (category: Category) => {
     setSelectedCategory(category);
     setActiveTab("edit");
   };
-  
+
   // Обработчик возврата к списку категорий
   const handleBackToList = () => {
     setSelectedCategory(null);
     setActiveTab("list");
   };
-  
+
   // Отображение списка категорий
   const renderCategoryList = () => {
     if (isLoading) {
@@ -46,7 +47,7 @@ export default function CategoryManagement() {
         </div>
       );
     }
-    
+
     if (!categories || categories.length === 0) {
       return (
         <div className="text-center py-8">
@@ -58,13 +59,13 @@ export default function CategoryManagement() {
         </div>
       );
     }
-    
+
     // Функция для отображения иконки
     const getIconComponent = (iconName: string) => {
       const IconComponent = iconMap[iconName];
       return IconComponent ? <IconComponent className="h-6 w-6" /> : null;
     };
-    
+
     return (
       <>
         <div className="flex justify-end mb-4">
@@ -73,7 +74,7 @@ export default function CategoryManagement() {
             Создать категорию
           </Button>
         </div>
-        
+
         <ScrollArea className="h-[500px]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.map((category: Category) => (
@@ -84,7 +85,7 @@ export default function CategoryManagement() {
                   </div>
                   <h3 className="font-bold text-lg text-center">{category.name}</h3>
                   <p className="text-gray-500 text-sm mb-3">/{category.slug}</p>
-                  
+
                   <Button size="sm" variant="outline" onClick={() => handleEditCategory(category)}>
                     <Edit2 className="h-4 w-4 mr-1" />
                     Изменить
@@ -104,11 +105,11 @@ export default function CategoryManagement() {
         <TabsTrigger value="list">Список категорий</TabsTrigger>
         <TabsTrigger value="edit">{selectedCategory ? "Редактирование категории" : "Новая категория"}</TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="list" className="mt-4">
         {renderCategoryList()}
       </TabsContent>
-      
+
       <TabsContent value="edit" className="mt-4">
         <CategoryForm 
           category={selectedCategory || undefined} 

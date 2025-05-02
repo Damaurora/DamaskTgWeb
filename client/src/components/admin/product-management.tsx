@@ -29,40 +29,42 @@ export default function ProductManagement() {
     isTop: false,
     isRecommended: false
   });
-  
+
   // Получаем все товары
   const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
+    initialData: [], // Added initialData to fix potential undefined issues.
   });
-  
+
   // Получаем все категории для фильтрации
-  const { data: categories = [] } = useQuery<Category[]>({
+  const { data: categories = [] } = useQuery<Category[]>({ //Missing Category type definition
     queryKey: ["/api/categories"],
+    initialData: [], // Added initialData to handle the case where data is not yet available.
   });
-  
+
   // Фильтрация товаров
   const filteredProducts = useMemo(() => {
     if (!products) return [];
-    
+
     return products.filter((product: Product) => {
       // Поиск по тексту
       const matchesSearch = searchQuery === "" || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
         product.description.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       // Фильтр по наличию
       const matchesStock = !filters.inStock || 
         (product.availabilityGagarina || product.availabilityPobedy);
-      
+
       // Фильтры по меткам
       const matchesNew = !filters.isNew || product.isNew;
       const matchesTop = !filters.isTop || product.isTop;
       const matchesRecommended = !filters.isRecommended || product.isRecommended;
-      
+
       return matchesSearch && matchesStock && matchesNew && matchesTop && matchesRecommended;
     });
   }, [products, searchQuery, filters]);
-  
+
   // Обработчик сброса фильтров
   const resetFilters = () => {
     setSearchQuery("");
@@ -73,25 +75,25 @@ export default function ProductManagement() {
       isRecommended: false
     });
   };
-  
+
   // Обработчик создания нового товара
   const handleCreateProduct = () => {
     setSelectedProduct(null);
     setActiveTab("edit");
   };
-  
+
   // Обработчик редактирования существующего товара
   const handleEditProduct = (product: Product) => {
     setSelectedProduct(product);
     setActiveTab("edit");
   };
-  
+
   // Обработчик возврата к списку товаров
   const handleBackToList = () => {
     setSelectedProduct(null);
     setActiveTab("list");
   };
-  
+
   // Отображение списка товаров
   const renderProductList = () => {
     if (isLoading) {
@@ -101,7 +103,7 @@ export default function ProductManagement() {
         </div>
       );
     }
-    
+
     if (!products || products.length === 0) {
       return (
         <div className="text-center py-8">
@@ -113,7 +115,7 @@ export default function ProductManagement() {
         </div>
       );
     }
-    
+
     return (
       <>
         <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -138,7 +140,7 @@ export default function ProductManagement() {
                 </Button>
               )}
             </div>
-            
+
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="gap-1">
@@ -190,13 +192,13 @@ export default function ProductManagement() {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          
+
           <Button onClick={handleCreateProduct}>
             <Plus className="mr-2 h-4 w-4" />
             Создать товар
           </Button>
         </div>
-        
+
         {/* Информация о выборке */}
         {(searchQuery || Object.values(filters).some(v => v)) && (
           <div className="mb-4 text-sm text-gray-500">
@@ -207,7 +209,7 @@ export default function ProductManagement() {
             )}
           </div>
         )}
-        
+
         <ScrollArea className="h-[600px]">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-20">
@@ -236,7 +238,7 @@ export default function ProductManagement() {
                   <CardContent className="p-4">
                     <h3 className="font-bold text-lg truncate">{product.name}</h3>
                     <p className="text-gray-500 text-sm mb-3 line-clamp-2">{product.description}</p>
-                    
+
                     <div className="flex justify-between items-center">
                       <div className="flex space-x-2">
                         <Badge variant={product.availabilityGagarina ? "default" : "outline"} className={product.availabilityGagarina ? "bg-primary" : ""}>
@@ -267,11 +269,11 @@ export default function ProductManagement() {
         <TabsTrigger value="list">Список товаров</TabsTrigger>
         <TabsTrigger value="edit">{selectedProduct ? "Редактирование товара" : "Новый товар"}</TabsTrigger>
       </TabsList>
-      
+
       <TabsContent value="list" className="mt-4">
         {renderProductList()}
       </TabsContent>
-      
+
       <TabsContent value="edit" className="mt-4">
         <ProductForm 
           product={selectedProduct || undefined} 

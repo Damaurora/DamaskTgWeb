@@ -25,34 +25,35 @@ export default function ProductGrid({
 }: ProductGridProps) {
   // Для главной страницы устанавливаем начальный лимит в 12
   const initialLimit = isHomePage ? 12 : limit;
-  
+
   // Состояние для текущего количества отображаемых товаров
   const [currentLimit, setCurrentLimit] = useState(initialLimit);
-  
+
   // If categoryId is provided, query products by category
   // Otherwise, query all products
   const queryUrl = categoryId 
     ? `/api/products?categoryId=${categoryId}`
     : "/api/products";
-  
-  const { data: products, isLoading } = useQuery<Product[]>({
+
+  const { data: products = [], isLoading } = useQuery<Product[]>({
     queryKey: [queryUrl],
+    initialData: [],
   });
-  
+
   // Общее количество доступных товаров
   const totalProducts = products?.length || 0;
-  
+
   // Проверяем, можно ли загрузить еще товары
   const canLoadMore = products && currentLimit < totalProducts;
-  
+
   // Функция для загрузки дополнительных товаров
   const handleLoadMore = () => {
     setCurrentLimit(prev => prev + 8); // Загружаем еще 8 товаров
   };
-  
+
   // Filter and limit products
   const displayProducts = products?.slice(0, currentLimit);
-  
+
   if (isLoading) {
     return (
       <section className="py-6 px-4">
@@ -64,7 +65,7 @@ export default function ProductGrid({
             </div>
           )}
         </div>
-        
+
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {Array.from({ length: isHomePage ? 12 : 4 }).map((_, i) => (
             <div key={i} className="bg-[hsl(var(--light-bg))] rounded-xl overflow-hidden">
@@ -83,9 +84,9 @@ export default function ProductGrid({
       </section>
     );
   }
-  
+
   if (!displayProducts?.length) return null;
-  
+
   return (
     <section className="py-6 px-4" id={categorySlug}>
       <div className="flex justify-between items-center mb-4">
@@ -96,13 +97,13 @@ export default function ProductGrid({
           </Link>
         )}
       </div>
-      
+
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {displayProducts.map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-      
+
       {/* Кнопка "Загрузить еще" для главной страницы */}
       {isHomePage && canLoadMore && (
         <div className="flex justify-center mt-8">

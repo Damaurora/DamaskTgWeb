@@ -5,20 +5,26 @@ import { useQuery } from "@tanstack/react-query";
 import { MapPin, Phone, Mail, Send } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 
+interface Location {
+  address: string;
+  phone: string;
+}
+
 export default function Footer() {
   const { data: locations = [] } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
+    initialData: [], // Added to handle potential initial loading state
   });
-  
+
   const [clickCount, setClickCount] = useState(0);
   const [, navigate] = useLocation();
   const { user, logoutMutation } = useAuth();
-  
+
   // Обработчик для скрытой кнопки администратора
   const handleSecretClick = () => {
     const newCount = clickCount + 1;
     setClickCount(newCount);
-    
+
     if (newCount >= 5) {
       setClickCount(0);
       navigate("/auth");
@@ -31,7 +37,7 @@ export default function Footer() {
       }, 100);
     }
   };
-  
+
   // Выход из панели администратора
   const handleLogout = () => {
     logoutMutation.mutate();
@@ -63,7 +69,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          
+
           <div>
             <h4 className="text-white font-medium mb-4">О магазине</h4>
             <ul className="text-gray-400 space-y-2">
@@ -121,14 +127,14 @@ export default function Footer() {
               )}
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-white font-medium mb-4">Контакты</h4>
             <ul className="text-gray-400 space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 text-primary mt-1 mr-2" />
                 <span>
-                  {locations?.map((loc: any) => loc.address).join("\n")}
+                  {locations?.map((loc: Location) => loc.address).join("\n")}
                 </span>
               </li>
               {locations?.[0] && (
@@ -148,7 +154,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
           <p>© {new Date().getFullYear()} Damask Shop. Все права защищены.</p>
           <p className="mt-2">Продукция предназначена только для совершеннолетних потребителей.</p>

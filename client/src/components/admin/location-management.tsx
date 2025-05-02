@@ -14,6 +14,7 @@ export default function LocationManagement() {
   // Получаем все магазины
   const { data: locations = [], isLoading } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
+    initialData: [],
   });
 
   // Обработчик создания нового магазина
