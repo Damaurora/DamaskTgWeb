@@ -17,7 +17,17 @@ export default function Home() {
     queryKey: ["/api/categories"],
   });
 
-  const { data: locations = [] } = useQuery<Location[]>({
+  interface Location {
+  id: number;
+  name: string;
+  address: string;
+  imageUrl: string;
+  hours: string;
+  phone: string;
+  mapLink: string;
+}
+
+const { data: locations = [] } = useQuery<Location[]>({
     queryKey: ["/api/locations"],
   });
 
